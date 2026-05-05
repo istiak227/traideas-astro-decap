@@ -1,0 +1,20 @@
+---
+const { post, delay = "0s" } = Astro.props;
+---
+
+<a href={`/insights/${post.slug}`} class="blog-card reveal" style={`--delay:${delay}`}>
+  <div class="b-thumb">
+    <span class="b-tag">{post.cat}</span>
+    <img src={post.image} alt={post.title} loading="lazy" />
+  </div>
+  <div class="b-body">
+    <div class="b-meta">
+      <span>{post.date}</span>
+      <span class="dot"></span>
+      {post.read && <span class="b-read">{post.read}</span>}
+    </div>
+    <h4>{post.title}</h4>
+    <p>{post.excerpt}</p>
+    <span class="b-link">Read more</span>
+  </div>
+</a>

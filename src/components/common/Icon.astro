@@ -1,0 +1,47 @@
+---
+const { name = "Arrow", size, class: className = "" } = Astro.props;
+
+const icons = {
+  Arrow: { size: 16, viewBox: "0 0 16 16", fill: "none", stroke: "currentColor", strokeWidth: "1.6", paths: ['<path d="M3 8h10M9 4l4 4-4 4" />'] },
+  ArrowUpRight: { size: 16, viewBox: "0 0 16 16", fill: "none", stroke: "currentColor", strokeWidth: "1.6", paths: ['<path d="M5 11L11 5M5 5h6v6" />'] },
+  Chevron: { size: 12, viewBox: "0 0 12 12", fill: "none", stroke: "currentColor", strokeWidth: "1.7", paths: ['<path d="M3 4.5L6 7.5l3-3" />'] },
+  Calendar: { size: 16, viewBox: "0 0 20 20", fill: "none", stroke: "currentColor", strokeWidth: "1.5", paths: ['<rect x="3" y="5" width="14" height="12" rx="2" />', '<path d="M3 9h14M7 3v4M13 3v4" />'] },
+  Mail: { size: 16, viewBox: "0 0 20 20", fill: "none", stroke: "currentColor", strokeWidth: "1.5", paths: ['<rect x="3" y="4.5" width="14" height="11" rx="2" />', '<path d="M3.5 6l6.5 4.5L16.5 6" />'] },
+  Phone: { size: 16, viewBox: "0 0 20 20", fill: "none", stroke: "currentColor", strokeWidth: "1.5", paths: ['<path d="M5.5 3h2l1.4 3.4L7 8a8 8 0 0 0 5 5l1.6-1.9 3.4 1.4v2A2 2 0 0 1 15 16.5C8.6 16.1 3.9 11.4 3.5 5A2 2 0 0 1 5.5 3z" />'] },
+  MapPin: { size: 16, viewBox: "0 0 20 20", fill: "none", stroke: "currentColor", strokeWidth: "1.5", paths: ['<path d="M10 18s5.5-5 5.5-9.5A5.5 5.5 0 0 0 4.5 8.5C4.5 13 10 18 10 18z" />', '<circle cx="10" cy="8.5" r="2" />'] },
+  Clock: { size: 16, viewBox: "0 0 20 20", fill: "none", stroke: "currentColor", strokeWidth: "1.5", paths: ['<circle cx="10" cy="10" r="7" />', '<path d="M10 6v4l2.5 1.5" />'] },
+  Play: { size: 14, viewBox: "0 0 16 16", fill: "currentColor", paths: ['<path d="M5 3l8 5-8 5V3z" />'] },
+  Download: { size: 16, viewBox: "0 0 20 20", fill: "none", stroke: "currentColor", strokeWidth: "1.6", paths: ['<path d="M10 3v10M5 9l5 4 5-4M4 17h12" />'] },
+  Sparkle: { size: 14, viewBox: "0 0 16 16", fill: "currentColor", paths: ['<path d="M8 0l1.2 5.3c.1.6.6 1.1 1.2 1.2L15 8l-4.6 1.5c-.6.2-1.1.7-1.2 1.2L8 16l-1.2-5.3c-.1-.5-.6-1-1.2-1.2L1 8l4.6-1.5c.6-.2 1.1-.7 1.2-1.2L8 0z" />'] },
+  Linkedin: { size: 15, viewBox: "0 0 16 16", fill: "currentColor", paths: ['<path d="M3.2 4.6c0-.9.7-1.6 1.6-1.6s1.6.7 1.6 1.6S5.7 6.2 4.8 6.2 3.2 5.5 3.2 4.6zm.2 2.8h3V14h-3V7.4zM7.8 7.4h2.9v.9c.4-.6 1.2-1.1 2.3-1.1 2.2 0 2.6 1.4 2.6 3.3V14h-3v-2.9c0-.7-.1-1.7-1.2-1.7-1.2 0-1.3.9-1.3 1.7V14h-3V7.4z" />'] },
+  Facebook: { size: 15, viewBox: "0 0 16 16", fill: "currentColor", paths: ['<path d="M9.5 14v-5.3H11l.3-2.2H9.5V5.2c0-.6.2-1.1 1-1.1h1V2.2h-1.6c-1.9 0-2.8 1.1-2.8 2.7v1.6H5.5v2.2h1.6V14h2.4z" />'] },
+  X: { size: 13, viewBox: "0 0 16 16", fill: "currentColor", paths: ['<path d="M11.7 2h2.3l-5 5.7L15 14H10.5l-3.4-4.5L3.3 14H1l5.4-6.1L1 2h4.6l3 4.1L11.7 2zm-.8 10.7h1.3L5.2 3.3H3.8l7.1 9.4z" />'] },
+  Instagram: { size: 15, viewBox: "0 0 16 16", fill: "none", stroke: "currentColor", strokeWidth: "1.4", paths: ['<rect x="2.5" y="2.5" width="11" height="11" rx="3" />', '<circle cx="8" cy="8" r="2.5" />', '<circle cx="11.3" cy="4.7" r=".6" fill="currentColor" />'] },
+  Github: { size: 15, viewBox: "0 0 16 16", fill: "currentColor", paths: ['<path d="M8 .5a7.5 7.5 0 00-2.4 14.6c.4.1.5-.2.5-.4v-1.4c-2 .5-2.5-.9-2.5-.9-.3-.9-.8-1.1-.8-1.1-.7-.4 0-.4 0-.4.8 0 1.2.8 1.2.8.7 1.2 1.8.8 2.2.6.1-.5.3-.8.5-1-1.6-.2-3.3-.8-3.3-3.6 0-.8.3-1.4.7-1.9-.1-.2-.3-.9.1-2 0 0 .6-.2 2.1.8a7 7 0 013.8 0C11.5 3.3 12 3.5 12 3.5c.4 1.1.2 1.8.1 2 .5.5.7 1.1.7 1.9 0 2.8-1.7 3.4-3.3 3.6.3.2.5.7.5 1.4v2.1c0 .2.2.4.5.4A7.5 7.5 0 008 .5z" />'] },
+  Health: { size: 28, viewBox: "0 0 28 28", fill: "none", stroke: "currentColor", strokeWidth: "1.4", paths: ['<path d="M14 23s-8-4.5-8-11a5 5 0 019-3 5 5 0 019 3c0 6.5-8 11-10 11z" />', '<path d="M10 13h2l1.5-3 1.5 4 1-2h2" />'] },
+  Energy: { size: 28, viewBox: "0 0 28 28", fill: "none", stroke: "currentColor", strokeWidth: "1.4", paths: ['<path d="M16 3l-7 12h5l-2 10 8-13h-5l1-9z" />'] },
+  Business: { size: 28, viewBox: "0 0 28 28", fill: "none", stroke: "currentColor", strokeWidth: "1.4", paths: ['<rect x="4" y="8" width="20" height="16" rx="1" />', '<path d="M10 8V5a1 1 0 011-1h6a1 1 0 011 1v3M4 14h20" />'] },
+  Ecom: { size: 28, viewBox: "0 0 28 28", fill: "none", stroke: "currentColor", strokeWidth: "1.4", paths: ['<path d="M4 5h3l3 13h12l2-9H8" />', '<circle cx="11" cy="23" r="1.5" />', '<circle cx="20" cy="23" r="1.5" />'] },
+  Startup: { size: 28, viewBox: "0 0 28 28", fill: "none", stroke: "currentColor", strokeWidth: "1.4", paths: ['<path d="M19 3l-10 13H14l-2 9 9-12h-5l3-10z" opacity=".5" />', '<path d="M6 22l2-2M4 18l2-2M10 26l1-1" />'] },
+  Nonprofit: { size: 28, viewBox: "0 0 28 28", fill: "none", stroke: "currentColor", strokeWidth: "1.4", paths: ['<path d="M14 25s-9-5-9-13a6 6 0 019-4 6 6 0 019 4c0 8-9 13-9 13z" />'] },
+  Govt: { size: 28, viewBox: "0 0 28 28", fill: "none", stroke: "currentColor", strokeWidth: "1.4", paths: ['<path d="M4 12L14 5l10 7" />', '<path d="M6 12v10h16V12M10 22v-6M14 22v-6M18 22v-6M4 24h20" />'] },
+  Software: { size: 28, viewBox: "0 0 28 28", fill: "none", stroke: "currentColor", strokeWidth: "1.4", paths: ['<path d="M10 9l-5 5 5 5M18 9l5 5-5 5M15 7l-2 14" />'] },
+  Transform: { size: 28, viewBox: "0 0 28 28", fill: "none", stroke: "currentColor", strokeWidth: "1.4", paths: ['<path d="M21 9a8 8 0 00-13.6-3.2L5 8" />', '<path d="M5 4v4h4M7 19a8 8 0 0013.6 3.2L23 20" />', '<path d="M23 24v-4h-4" />'] },
+  Product: { size: 28, viewBox: "0 0 28 28", fill: "none", stroke: "currentColor", strokeWidth: "1.4", paths: ['<path d="M14 4l9 5-9 5-9-5 9-5z" />', '<path d="M5 14l9 5 9-5M5 19l9 5 9-5" />'] },
+  Consulting: { size: 28, viewBox: "0 0 28 28", fill: "none", stroke: "currentColor", strokeWidth: "1.4", paths: ['<circle cx="14" cy="14" r="9" />', '<path d="M14 9v5l3 2M8 22l-3 3M20 22l3 3" />'] },
+  About: { size: 18, viewBox: "0 0 20 20", fill: "none", stroke: "currentColor", strokeWidth: "1.5", paths: ['<circle cx="10" cy="6" r="3" />', '<path d="M4.5 17a5.5 5.5 0 0111 0" />'] },
+  Moments: { size: 18, viewBox: "0 0 20 20", fill: "none", stroke: "currentColor", strokeWidth: "1.5", paths: ['<rect x="3" y="4" width="14" height="12" rx="2" />', '<path d="M7 9l2 2 2.5-3 3.5 5H5l2-4z" />'] },
+  Careers: { size: 18, viewBox: "0 0 20 20", fill: "none", stroke: "currentColor", strokeWidth: "1.5", paths: ['<rect x="3" y="6" width="14" height="11" rx="2" />', '<path d="M7 6V4.5A1.5 1.5 0 018.5 3h3A1.5 1.5 0 0113 4.5V6M3 10h14" />'] }
+};
+
+icons.LinkedIn = icons.Linkedin;
+icons.GitHub = icons.Github;
+
+const icon = icons[name] ?? icons.Arrow;
+const width = size ?? icon.size;
+const strokeAttrs = icon.stroke
+  ? `stroke="${icon.stroke}" stroke-width="${icon.strokeWidth}" stroke-linecap="round" stroke-linejoin="round"`
+  : "";
+const svg = `<svg width="${width}" height="${width}" viewBox="${icon.viewBox}" fill="${icon.fill}" ${strokeAttrs} aria-hidden="true" focusable="false">${icon.paths.join("")}</svg>`;
+---
+<span class:list={["icon", className]} set:html={svg}></span>

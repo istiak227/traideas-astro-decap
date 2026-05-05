@@ -1,0 +1,13 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import { insights } from "../../data/insightsData.js";
+export function getStaticPaths() {
+  const posts = insights.filter((p) => p.type === "blog");
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+const { post } = Astro.props;
+---
+<MainLayout title={`${post.title} | Traideas`} description={post.excerpt} image={post.image}>
+  <section class="service-hero"><div class="sh-bg"></div><div class="sh-blob"></div><div class="container"><div class="sh-grid"><div class="reveal in"><div class="sh-crumb"><a href="/insights">Insights</a><span>›</span><span>{post.cat}</span></div><div class="eyebrow">{post.cat} · {post.read}</div><h1 class="h-display" style="font-size:clamp(42px,6vw,78px)">{post.title}</h1><p class="sh-sub">{post.excerpt}</p></div><div class="sh-visual reveal in" style="padding:0;overflow:hidden"><img src={post.image} alt={post.title} /></div></div></div></section>
+  <article class="service-about"><div class="container" style="max-width:850px"><div class="detail-rich">{post.body.map((p) => <p>{p}</p>)}</div></div></article>
+</MainLayout>

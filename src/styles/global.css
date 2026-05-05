@@ -1,0 +1,55 @@
+@import "/assets/css/styles.css";
+@import "/assets/css/about.css";
+@import "/assets/css/service-page.css";
+@import "/assets/css/case-studies.css";
+@import "/assets/css/insights.css";
+@import "/assets/css/careers.css";
+@import "/assets/css/contact.css";
+@import "/assets/css/moments.css";
+@import "/assets/css/privacy.css";
+
+:root {
+  --header-offset: 76px;
+}
+
+.nav-links a.active,
+.nav-trigger.active {
+  color: var(--brand-ink);
+  background: var(--brand-tint-2);
+}
+
+.mobile-drawer {
+  transform: translateY(-8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+
+.mobile-drawer.is-open {
+  transform: none;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.filter-hidden {
+  display: none !important;
+}
+
+.detail-rich {
+  color: var(--graphite);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.detail-rich p {
+  margin: 0 0 18px;
+}
+
+.placeholder-note {
+  color: var(--muted);
+  font-size: 14px;
+  border: 1px dashed var(--hair);
+  border-radius: var(--radius);
+  padding: 18px;
+  background: var(--paper);
+}

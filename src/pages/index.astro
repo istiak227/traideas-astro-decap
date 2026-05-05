@@ -1,0 +1,48 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import Hero from "../components/home/Hero.astro";
+import ServicesSection from "../components/home/ServicesSection.astro";
+import IndustriesSection from "../components/home/IndustriesSection.astro";
+import CaseStudiesSection from "../components/home/CaseStudiesSection.astro";
+import CultureSection from "../components/home/CultureSection.astro";
+import CareersSection from "../components/home/CareersSection.astro";
+import CTASection from "../components/home/CTASection.astro";
+import AskAI from "../components/home/AskAI.astro";
+import TechIcon from "../components/home/TechIcon.astro";
+import BlogCard from "../components/common/BlogCard.astro";
+import SectionHeader from "../components/common/SectionHeader.astro";
+import { clients, whyTraideas, techStack } from "../data/homeData.js";
+import { latestBlogPosts } from "../data/insightsData.js";
+---
+<MainLayout>
+  <Hero />
+  <section class="clients">
+    <div class="container"><div class="clients-head reveal"><p>{clients.eyebrow}</p><div class="serif-italic">{clients.title}</div></div></div>
+    <div class="marquee"><div class="marquee-track">{[...clients.logos, ...clients.logos].map((src) => <img src={src} alt="" loading="lazy" />)}</div></div>
+  </section>
+  <ServicesSection />
+  <IndustriesSection />
+  <CaseStudiesSection />
+  <section class="block why">
+    <div class="container">
+      <SectionHeader eyebrow={whyTraideas.eyebrow} title={'Why organizations <span class="serif-italic">choose us.</span>'} description={whyTraideas.description} />
+      <div class="why-grid">{whyTraideas.items.map((w, i) => <div class="why-card reveal" style={`--delay:${i * 0.06}s`}><div class="w-num">{w.n}</div><h4>{w.t}</h4><p>{w.d}</p></div>)}</div>
+    </div>
+  </section>
+  <section class="block">
+    <div class="container">
+      <SectionHeader eyebrow={techStack.eyebrow} title={'The stack we <span class="serif-italic">live in.</span>'} description={techStack.description} />
+      <div class="tech-grid">{techStack.items.map((t, i) => <div class="tech-card reveal" style={`--delay:${i * 0.04}s`}><div class="t-ico"><TechIcon name={t.name} /></div><div><div class="t-name">{t.name}</div><div class="t-desc">{t.desc}</div></div></div>)}</div>
+    </div>
+  </section>
+  <CTASection />
+  <CultureSection />
+  <CareersSection />
+  <section class="block" id="blog">
+    <div class="container">
+      <SectionHeader eyebrow="Latest insights" title={'From the <span class="serif-italic">engineering desk.</span>'} action={{ label: "All posts", href: "/insights" }} />
+      <div class="blog-grid">{latestBlogPosts.map((p, i) => <BlogCard post={p} delay={`${i * 0.08}s`} />)}</div>
+    </div>
+  </section>
+  <AskAI />
+</MainLayout>

@@ -1,0 +1,62 @@
+---
+import Icon from "../common/Icon.astro";
+
+const prompt = "Tell me about Traideas and what services they provide.";
+const encodedPrompt = encodeURIComponent(prompt);
+const targets = [
+  {
+    name: "ChatGPT",
+    url: "https://chat.openai.com/?q=",
+    image: "/assets/images/gpt.png"
+  },
+  {
+    name: "Claude",
+    url: "https://claude.ai/new?q=",
+    image: "/assets/images/cloude.png"
+  },
+  {
+    name: "Gemini",
+    url: "https://gemini.google.com/app?q=",
+    image: "/assets/images/gimini.jpeg"
+  },
+  {
+    name: "Perplexity",
+    url: "https://www.perplexity.ai/?q=",
+    image: "/assets/images/perplexity.png"
+  },
+  {
+    name: "Grok",
+    url: "https://grok.com/?q=",
+    image: "/assets/images/grok.png"
+  }
+];
+---
+<section class="ask-ai" id="ask-ai">
+  <div class="ask-ai-grain"></div>
+  <div class="container ask-ai-inner reveal">
+    <div class="eyebrow">
+      <Icon name="Sparkle" />
+      Ask AI about Traideas
+    </div>
+    <h2>Don't take <span class="it">our word</span> for it.</h2>
+    <p>Ask your favorite AI what it knows about us. One click opens a fresh conversation with a suggested prompt.</p>
+    <div class="ai-prompt">
+      <div class="ap-ico">
+        <Icon name="Sparkle" size={18} />
+      </div>
+      <div class="ap-text">
+        <span class="quote">"</span>{prompt}<span class="quote">"</span>
+      </div>
+    </div>
+    <div class="ai-targets">
+      {targets.map((target) => (
+        <a class="ai-target" href={`${target.url}${encodedPrompt}`} target="_blank" rel="noreferrer">
+          <div class="ai-ico">
+            <img src={target.image} alt="" loading="lazy" />
+          </div>
+          <div class="ai-name">{target.name}</div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,66 @@
+---
+import { siteData } from "../../data/siteData.js";
+import { services } from "../../data/servicesData.js";
+import Icon from "./Icon.astro";
+const currentYear = new Date().getFullYear();
+---
+<footer class="footer" id="contact">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="fb-logo">
+          <img src={siteData.logo} alt="Traideas" width="36" height="36" />
+          <span>{siteData.name}</span>
+        </div>
+        <p>{siteData.description}</p>
+        <div class="fb-contact">
+          <strong>Phone</strong>
+          <a href={`tel:${siteData.phone.replaceAll(" ", "")}`}>{siteData.phone}</a>
+          <strong>Email</strong>
+          <a href={`mailto:${siteData.email}`}>{siteData.email}</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/careers">Careers</a></li>
+          <li><a href="/insights">Blog</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>{services.map((service) => <li><a href={`/services/${service.slug}`}>{service.cardTitle}</a></li>)}</ul>
+      </div>
+      <div class="footer-col">
+        <h5>Industries</h5>
+        <ul>{["Healthcare", "Energy", "Government", "Startups", "Non-Profit", "Enterprise"].map((x) => <li><a href="/#industries">{x}</a></li>)}</ul>
+      </div>
+      <div class="footer-col">
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="/privacy-policy">Privacy Policy</a></li>
+          <li><a href="/case-studies">Case Studies</a></li>
+          <li><a href="/moments">Team</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+        <div class="footer-profile">
+          <a href={siteData.companyProfileUrl} target="_blank" rel="noreferrer" download class="btn btn-brand btn-sm footer-profile-btn">
+            <Icon name="Download" size={13} />
+            Company Profile
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-current-year>{currentYear}</span> Traideas. All rights reserved.</div>
+      <div class="footer-socials">{siteData.socialLinks.map((s) => <a href={s.href} aria-label={s.label} target="_blank" rel="noreferrer"><Icon name={s.label} /></a>)}</div>
+      <div class="footer-basis">
+        <a href={siteData.basisProfileUrl} target="_blank" rel="noreferrer" aria-label="View Traideas BASIS member profile">
+          <img src={siteData.basisLogo} alt="BASIS member" loading="lazy" />
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

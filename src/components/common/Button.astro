@@ -1,0 +1,8 @@
+---
+import Icon from "./Icon.astro";
+const { href = "#", label, variant = "primary", small = false, class: className = "" } = Astro.props;
+---
+<a href={href} class:list={["btn", `btn-${variant}`, small && "btn-sm", "btn-arrow", className]}>
+  <slot>{label}</slot>
+  <Icon name="Arrow" size={14} />
+</a>

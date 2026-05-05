@@ -1,0 +1,47 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import Icon from "../../components/common/Icon.astro";
+import { caseStudies, industries } from "../../data/caseStudiesData.js";
+import { seoData } from "../../data/seoData.js";
+const ctaDots = Array.from({ length: 40 }, (_, i) => ({
+  x: 50 + (i % 10) * 34,
+  y: 40 + Math.floor(i / 10) * 55,
+  opacity: Math.max(0.15, Math.sin(i * 0.6) * 0.5 + 0.6),
+  radius: 4 + Math.sin(i) * 2
+}));
+---
+<MainLayout title={seoData.pages.caseStudies.title} description={seoData.pages.caseStudies.description}>
+  <section class="cs-hero"><div class="cs-hero-bg"></div><div class="cs-hero-blob"></div><div class="cs-hero-blob-2"></div><div class="container"><div class="cs-hero-grid"><div class="reveal in"><div class="eyebrow" style="margin-bottom:18px">Case Studies</div><h1 class="h-display" style="margin-bottom:24px">Real systems.<br /><span class="serif-italic" style="color:var(--brand-ink)">Real impact.</span></h1><p class="hero-sub" style="margin-bottom:32px">Traideas delivers scalable software, intelligent automation, and robust digital infrastructure for governments, hospitals, utilities, and enterprises worldwide.</p><div class="hero-ctas"><a href="#work" class="btn btn-primary btn-arrow">Explore Our Work</a><a href="/contact" class="btn btn-ghost"><Icon name="Calendar" size={15} />Schedule a Call</a></div></div><div class="cs-hero-visual-col reveal in"><div class="sh-visual"><div class="sv-eyebrow"><div class="pulse-dot"></div>Delivered Across 5+ Industries</div><div class="sv-stat-list"><div><strong>20+</strong><span>Systems Delivered</span></div><div><strong>6</strong><span>Industries Served</span></div><div><strong>3</strong><span>Countries</span></div><div><strong>500K+</strong><span>Records Managed</span></div></div><div class="sv-tags">{["Government", "Healthcare", "Energy", "Education", "NGO", "Enterprise"].map((tag) => <span>{tag}</span>)}</div><div class="sv-bottom"><span class="pulse"><span class="pulse-dot-2"></span>Ongoing partnerships</span><span>Bangladesh · Canada · New Zealand</span></div></div></div></div></div></section>
+  <div class="cs-filter-wrap" id="work"><div class="container"><div class="cs-filter-inner" data-filter-group="case-studies"><span class="cs-filter-label">Filter:</span>{industries.map((ind, i) => <button class:list={["cs-filter-btn", i === 0 && "active"]} data-filter={ind}>{ind}<span class="cs-filter-count">{ind === "All" ? caseStudies.length : caseStudies.filter((cs) => cs.industry === ind).length}</span></button>)}</div></div></div>
+  <section class="cs-grid-section"><div class="container"><div class="cs-grid">{caseStudies.map((cs, i) => <a href={`/case-studies/${cs.slug}`} class="cs-card reveal" data-filter-target="case-studies" data-category={cs.industry} style={`--delay:${i * 0.07}s`}><div class="cs-media"><div class="cs-mock"><div class="proj-mock" style={`background:linear-gradient(135deg,${cs.colorTint},#f6f4ec)`}><strong style="font-size:11px">{cs.shortTitle}</strong><div class="pm-chips"><span class="pm-chip g">{cs.industry}</span><span class="pm-chip a">{cs.location}</span></div><div class="pm-bar"></div><div class="pm-bar" style="width:80%"></div></div></div></div><div class="cs-body"><span class="cs-tag">{cs.industry}</span><h3 class="cs-card-title-clamp">{cs.title}</h3><p class="cs-card-desc-clamp">{cs.summary}</p><div class="cs-meta"><div><span>Client</span><strong>{cs.clientShort}</strong></div><div><span>Location</span><strong>{cs.location}</strong></div></div></div></a>)}</div></div></section>
+  <div class="case-studies-cta-wrap">
+    <section class="cta-banner case-studies-cta">
+      <div class="cta-banner-bg"></div>
+      <div class="cta-banner-inner">
+        <div>
+          <div class="eyebrow case-studies-cta-eyebrow">Work with us</div>
+          <h2>Have a complex workflow that needs a <span class="it">better system?</span></h2>
+          <p>Let's explore how Traideas can design, develop, and scale the right digital solution for your organization.</p>
+          <div class="cta-banner-actions">
+            <a href="/contact" class="btn btn-primary"><Icon name="Calendar" size={15} />Schedule a Call</a>
+            <a href="/services" class="btn btn-ghost">Our Services <Icon name="Arrow" size={14} /></a>
+          </div>
+        </div>
+        <div class="viz">
+          <svg viewBox="0 0 400 260" fill="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="case-cta-gradient" x1="0" x2="1">
+                <stop offset="0" stop-color="#8D99CE" />
+                <stop offset="1" stop-color="#BCCFB7" />
+              </linearGradient>
+            </defs>
+            {ctaDots.map((dot) => <circle cx={dot.x} cy={dot.y} r={dot.radius} fill="url(#case-cta-gradient)" opacity={dot.opacity} />)}
+            <path d="M60 200 Q160 120 260 180 T380 100" stroke="#8D99CE" stroke-width="2" fill="none" />
+            <circle cx="380" cy="100" r="6" fill="white" />
+            <circle cx="380" cy="100" r="12" fill="none" stroke="white" opacity=".4" />
+          </svg>
+        </div>
+      </div>
+    </section>
+  </div>
+</MainLayout>

@@ -1,0 +1,18 @@
+---
+import SectionHeader from "../common/SectionHeader.astro";
+import Icon from "../common/Icon.astro";
+import { industries } from "../../data/homeData.js";
+---
+<section class="block industries" id="industries">
+  <div class="container">
+    <SectionHeader eyebrow={industries.eyebrow} title={'Industries <span class="serif-italic" style="color:var(--brand)">we serve.</span>'} description={industries.description} />
+    <div class="ind-grid reveal">
+      {industries.items.map((item, i) => (
+        <div class="ind-card">
+          <div class="ind-num">{String(i + 1).padStart(2, "0")}</div>
+          <div><div class="ind-ico"><Icon name={item.icon} /></div><h4>{item.label}</h4><p>{item.sub}</p></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

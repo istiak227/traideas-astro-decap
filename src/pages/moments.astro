@@ -1,0 +1,126 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { momentsData } from "../data/momentsData.js";
+import Icon from "../components/common/Icon.astro";
+
+const { hero, galleryIntro, gallery, cta } = momentsData;
+---
+
+<MainLayout title="Moments | Traideas" description={hero.subtitle}>
+  <section class="moments-hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-blob"></div>
+    <div class="container mh-grid">
+      <div class="mh-left reveal in">
+        <div class="eyebrow">{hero.eyebrow}</div>
+        <h1 class="h-display" style="margin-top:18px">
+          {hero.title} <br />
+          <span class="accent">{hero.accent}</span>
+        </h1>
+        <p class="mh-sub">{hero.subtitle}</p>
+        <div class="mh-ctas">
+          <a href={hero.primaryCta.href} class="btn btn-primary btn-arrow">{hero.primaryCta.label}</a>
+          <a href={hero.secondaryCta.href} class="btn btn-ghost btn-arrow">{hero.secondaryCta.label}</a>
+        </div>
+        <div class="mh-meta">
+          {hero.meta.map((m) => (
+            <div class="mh-meta-item">
+              <div class="lbl">{m.label}</div>
+              <div class="val">{m.value}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="mh-right reveal in">
+        <div class="mh-collage">
+          {hero.collage.map((item) => (
+            <div class={`mh-tile ${item.cls}`}>
+              <img src={item.src} alt={item.alt} loading="lazy" decoding="async" />
+            </div>
+          ))}
+          <div class="chip chip-mc1"><span class="pulse"></span>{hero.chips[0]}</div>
+          <div class="chip chip-mc2"><span class="pulse"></span>{hero.chips[1]}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="moments-grid-section" id="moments-grid">
+    <div class="container">
+      <div class="block-head reveal">
+        <div>
+          <div class="eyebrow">{galleryIntro.eyebrow}</div>
+          <h2 class="h-section" style="margin-top:14px">
+            {galleryIntro.title} <span class="serif-italic">{galleryIntro.accent}</span>
+          </h2>
+        </div>
+        <p class="block-head-r">{galleryIntro.description}</p>
+      </div>
+      <div class="moments-grid reveal" role="list" aria-label="Culture moments gallery">
+        {gallery.map((m, i) => (
+          <figure
+            role="listitem"
+            class={`mg-item ${m.size}`}
+            style={`--delay:${i * 0.04}s`}
+            tabindex="0"
+            aria-label={`${m.tag} moment`}
+          >
+            {m.type === "video" ? (
+              <video data-src={m.src} poster={m.poster} muted loop playsinline preload="none" controls={m.controls ?? true}></video>
+            ) : (
+              <img src={m.src} alt={`${m.tag} at Traideas`} loading="lazy" decoding="async" />
+            )}
+            <div class="mg-overlay"></div>
+            <figcaption class="mg-chip">{m.tag}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="moments-cta">
+    <div class="container">
+      <div class="moments-cta-inner reveal">
+        <div class="moments-cta-bg"></div>
+        <div class="moments-cta-content">
+          <div class="eyebrow">{cta.eyebrow}</div>
+          <h2>{cta.title} <span class="it">{cta.accent}</span></h2>
+          <p>{cta.description}</p>
+          <div class="moments-cta-buttons">
+            <a href={cta.primary.href} class="btn btn-primary btn-arrow">{cta.primary.label}</a>
+            <a href={cta.secondary.href} class="btn btn-ghost">
+              <Icon name="Calendar" size={15} />{cta.secondary.label}
+            </a>
+          </div>
+          <div class="moments-cta-tagline">{cta.tagline}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    document.querySelectorAll(".moments-grid video[data-src]").forEach((video) => {
+      const loadVideo = () => {
+        if (!video.dataset.src || video.src) return;
+        video.src = video.dataset.src;
+        video.load();
+      };
+
+      if (!("IntersectionObserver" in window)) {
+        loadVideo();
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          loadVideo();
+          observer.unobserve(video);
+        });
+      }, { rootMargin: "240px 0px" });
+
+      observer.observe(video);
+    });
+  </script>
+</MainLayout>

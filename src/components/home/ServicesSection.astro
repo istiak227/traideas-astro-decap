@@ -1,0 +1,21 @@
+---
+import SectionHeader from "../common/SectionHeader.astro";
+import Icon from "../common/Icon.astro";
+import { services } from "../../data/servicesData.js";
+---
+<section class="block" id="services">
+  <div class="container">
+    <SectionHeader eyebrow="Our services" title={'Four disciplines, <span class="serif-italic">one outcome.</span>'} description="End-to-end delivery under a single engagement. We staff, architect, and ship — then stay for the long tail of support." />
+    <div class="services-grid">
+      {services.map((service, i) => (
+        <a href={`/services/${service.slug}`} class="service-card reveal" style={`--delay:${i * 0.08}s`}>
+          <div class="s-num">{service.num} / 04</div>
+          <div class="s-visual"><Icon name={service.icon} size={48} /></div>
+          <h3 class="h-card">{service.cardTitle}</h3>
+          <p>{service.desc}</p>
+          <span class="s-link">Learn more</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

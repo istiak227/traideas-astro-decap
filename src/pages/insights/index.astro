@@ -1,0 +1,399 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import Icon from "../../components/common/Icon.astro";
+import BlogCard from "../../components/common/BlogCard.astro";
+import { blogPosts, insightCategories } from "../../data/insightsData.js";
+import { seoData } from "../../data/seoData.js";
+
+const blog = blogPosts;
+
+const quickBits = [
+  { kind: "image", img: "/assets/images/culture/culture-01.jpg", cat: "Behind the scenes", title: "CCMS launch huddle, March 2026", pin: true },
+  {
+    kind: "text",
+    cat: "Engineering tip",
+    title: "We stopped using soft deletes",
+    body: "After a 3-month audit-trail rebuild, we moved every table to event-sourced state. Hard problem, but reconciliation got 4x faster.",
+    meta: "Apr 22 · 2 min"
+  },
+  {
+    kind: "code",
+    cat: "Code · TypeScript",
+    lines: [
+      { cls: "com", text: "// idempotent retry with backoff\n" },
+      { cls: "kw", text: "export async function " },
+      { cls: "fn", text: "retry" },
+      { text: "<T>(fn: () => " },
+      { cls: "kw", text: "Promise" },
+      { text: "<T>) {\n  " },
+      { cls: "kw", text: "let " },
+      { text: "attempt = 0;\n  " },
+      { cls: "kw", text: "while " },
+      { text: "(attempt < 5) {\n    " },
+      { cls: "kw", text: "try " },
+      { text: "{ " },
+      { cls: "kw", text: "return await " },
+      { text: "fn(); }\n    " },
+      { cls: "kw", text: "catch " },
+      { text: "(e) {\n      " },
+      { cls: "kw", text: "await " },
+      { text: "sleep(" },
+      { cls: "str", text: "2 ** attempt * 100" },
+      { text: ");\n      attempt++;\n    }\n  }\n}" }
+    ]
+  },
+  { kind: "image", img: "/assets/images/culture/culture-05.jpg", cat: "Lab", title: "Whiteboard: integration topology" },
+  {
+    kind: "text",
+    cat: "Architecture",
+    title: "API-first is not microservices",
+    body: "We designed the consumer-rights platform as a modular monolith with hard internal boundaries. Same shipping cadence, half the ops cost.",
+    meta: "Apr 14 · 3 min"
+  },
+  { kind: "image", img: "/assets/images/culture/culture-08.jpg", cat: "Deploy day", title: "Going live in 19 districts" },
+  {
+    kind: "text",
+    cat: "Decision log",
+    title: "Why we picked Postgres over a graph DB",
+    body: "The relationships are deep but the query shapes are stable. Postgres + recursive CTEs has carried us through 4 platforms now.",
+    meta: "Apr 08 · 2 min"
+  },
+  { kind: "image", img: "/assets/images/culture/culture-06.jpg", cat: "UI fragment", title: "Complaint triage workflow" },
+  { kind: "image", img: "/assets/images/culture/culture-02.jpg", cat: "Team", title: "Engineering review · Q1" },
+  {
+    kind: "text",
+    cat: "Field note",
+    title: "Government users do not trust toasts",
+    body: "Removed every transient notification on the CCMS dashboard. Replaced with persistent status rows. Support tickets dropped 38%.",
+    meta: "Apr 03 · 2 min"
+  },
+  { kind: "image", img: "/assets/images/culture/culture-07.jpg", cat: "Design", title: "Form pattern explorations" },
+  {
+    kind: "text",
+    cat: "Quick bit",
+    title: "The 4-question RFP triage",
+    body: "Before we write a proposal, we answer four questions out loud. If we cannot, we politely decline. Saved us 60% of unscoped work.",
+    meta: "Mar 28 · 1 min"
+  }
+];
+
+const resources = [
+  {
+    icon: "Roadmap",
+    tags: [["t-framework", "Framework"], ["t-internal", "Internal"]],
+    title: "Digital Transformation Roadmap Template",
+    desc: "A structured framework used across institutional modernization projects: phasing, governance, KPIs, and rollback gates.",
+    meta: ["12 pages", "Updated Apr 2026"]
+  },
+  {
+    icon: "Architecture",
+    tags: [["t-toolkit", "Toolkit"], ["t-internal", "Internal"]],
+    title: "Architecture Decision Record Pack",
+    desc: "Battle-tested ADR templates we use on every engagement: context, options, consequences, and review cadence.",
+    meta: ["7 templates", "Markdown · Notion"]
+  },
+  {
+    icon: "Government",
+    tags: [["t-pdf", "PDF"], ["t-external", "External"]],
+    title: "Government Workflow Sample Library",
+    desc: "Anonymized workflow diagrams from public-sector engagements: complaint triage, license issuance, citizen onboarding.",
+    meta: ["28 workflows", "PDF · 4.2 MB"]
+  },
+  {
+    icon: "Checklist",
+    tags: [["t-guide", "Guide"], ["t-internal", "Internal"]],
+    title: "System Planning Pre-Flight Checklist",
+    desc: "The 47 questions we answer before writing a single line of code on a national-scale platform.",
+    meta: ["47 items", "5 min read"]
+  },
+  {
+    icon: "Doc",
+    tags: [["t-pdf", "Whitepaper"], ["t-external", "External"]],
+    title: "Building Trust in Public Service Portals",
+    desc: "Whitepaper on UX patterns that move citizen trust metrics, based on production data from three ministry platforms.",
+    meta: ["18 pages", "PDF · 2.1 MB"]
+  },
+  {
+    icon: "Procurement",
+    tags: [["t-guide", "Guide"], ["t-internal", "Internal"]],
+    title: "Procurement Readiness Document",
+    desc: "Compliance, security, and SLA reference document we provide to government and enterprise procurement teams.",
+    meta: ["Tender-ready", "Updated quarterly"]
+  },
+  {
+    icon: "Integration",
+    tags: [["t-framework", "Framework"], ["t-internal", "Internal"]],
+    title: "Legacy Integration Framework",
+    desc: "Patterns for safely connecting to mainframes, SOAP services, and ministry-grade legacy systems without a rewrite.",
+    meta: ["6 patterns", "With code"]
+  },
+  {
+    icon: "API",
+    tags: [["t-toolkit", "Toolkit"], ["t-external", "External"]],
+    title: "API Documentation Examples",
+    desc: "Reference API docs from CCMS and selected platforms: schemas, auth flows, idempotency, and rate-limit headers.",
+    meta: ["3 platforms", "OpenAPI 3.1"]
+  }
+];
+
+const counts = {
+  blog: blog.length,
+  quick: quickBits.length,
+  resources: resources.length
+};
+
+const categoryMeta = Object.fromEntries(insightCategories.map((c) => [c.key, c.meta]));
+
+const filterIcons = {
+  blog: '<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 2.5h7l3 3v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1z" /><path d="M9.5 2.5v3h3" /><path d="M5 9h6M5 11.5h4" /></svg>',
+  quick: '<svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M9.4 1.2 3 9h4l-1 6 6.5-8.2H8.5l.9-5.6z" /></svg>',
+  resources: '<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M2.5 8h11M2.5 12h11" /><circle cx="4.5" cy="4" r=".7" fill="currentColor" /><circle cx="4.5" cy="8" r=".7" fill="currentColor" /><circle cx="4.5" cy="12" r=".7" fill="currentColor" /></svg>'
+};
+
+const resourceIcons = {
+  Roadmap: '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5h6l3 3h11" /><path d="M3 12.5h11l3 3h5" /><path d="M3 18.5h6" /></svg>',
+  Doc: '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h11l5 5v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" /><path d="M16 3v5h5M8 13h10M8 17h10M8 21h6" /></svg>',
+  Architecture: '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1.5" /><rect x="15" y="3" width="8" height="8" rx="1.5" /><rect x="3" y="15" width="8" height="8" rx="1.5" /><rect x="15" y="15" width="8" height="8" rx="1.5" /><path d="M11 7h4M11 19h4M7 11v4M19 11v4" stroke-dasharray="1.5 1.5" /></svg>',
+  Checklist: '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l2 2 4-4M4 14l2 2 4-4M4 22l2 2 4-4" /><path d="M14 6h8M14 14h8M14 22h8" /></svg>',
+  Procurement: '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8l1 14h14l1-14" /><path d="M9 8V5a4 4 0 0 1 8 0v3" /><path d="M9 13h8M9 17h5" /></svg>',
+  Integration: '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="13" r="3" /><circle cx="20" cy="13" r="3" /><path d="M9 13h8" /><path d="M13 6v4M13 16v4" /></svg>',
+  API: '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4l-7 9 7 9M17 4l7 9-7 9M14 4l-2 18" /></svg>',
+  Government: '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 11l10.5-7 10.5 7M5 11v10M21 11v10M9 11v10M17 11v10M13 11v10M2 22h22" /></svg>'
+};
+---
+
+<MainLayout title={seoData.pages.insights.title} description={seoData.pages.insights.description}>
+  <section class="insights-hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-blob"></div>
+    <div class="container ih-grid">
+      <div class="ih-left reveal in">
+        <div class="eyebrow">Insights · Engineering desk</div>
+        <h1 class="h-display">
+          Insights That Shape <br />
+          <span class="accent">Better Systems.</span>
+        </h1>
+        <p class="ih-sub">
+          We share what we learn while building scalable platforms, solving
+          institutional problems, and designing systems that last.
+        </p>
+        <div class="ih-ctas">
+          <a href="#blog" class="btn btn-primary btn-arrow">Explore Articles</a>
+          <a href="#resources" class="btn btn-ghost btn-arrow">Browse Resources</a>
+        </div>
+        <div class="ih-meta">
+          <div class="ih-meta-item">
+            <div class="lbl">Articles</div>
+            <div class="val">{counts.blog}</div>
+          </div>
+          <div class="ih-meta-item">
+            <div class="lbl">Quick bits</div>
+            <div class="val">{counts.quick}+</div>
+          </div>
+          <div class="ih-meta-item">
+            <div class="lbl">Resources</div>
+            <div class="val">{counts.resources} templates</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ih-right reveal in" style="--delay:.15s">
+        <div class="ih-collage">
+          <div class="ih-tile t-1">
+            <img src="/assets/images/culture/culture-04.jpg" alt="Engineering work session" />
+          </div>
+          <div class="ih-tile t-2">
+            <img src="/assets/images/culture/culture-07.jpg" alt="Design review" />
+          </div>
+          <div class="ih-card">
+            <div class="ih-card-eb">Featured · 8 min read</div>
+            <div class="ih-card-t">{blog[0]?.title}</div>
+            <div class="ih-card-bar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="insights-filter-section">
+    <div class="container insights-filter">
+      <div class="if-tabs" data-filter-group="insights">
+        {insightCategories.map((c, i) => (
+          <button
+            class:list={["if-tab", i === 0 && "active"]}
+            data-filter={c.key}
+            data-insights-meta={c.meta}
+            aria-label={`Show ${c.label}`}
+          >
+            <span set:html={filterIcons[c.key]}></span>
+            <span>{c.label}</span>
+            <span class="if-count">{counts[c.key]}</span>
+          </button>
+        ))}
+      </div>
+      <div class="if-meta" data-insights-meta-output>{categoryMeta.blog}</div>
+    </div>
+  </div>
+
+  <section
+    class="container insights-view"
+    id="blog"
+    data-filter-target="insights"
+    data-category="blog"
+  >
+    <div class="iv-head reveal">
+      <div>
+        <div class="eyebrow">Articles</div>
+        <h2 style="margin-top:12px">From the <span class="it">engineering desk.</span></h2>
+      </div>
+      <p class="iv-sub">
+        Long-form pieces on engineering practice, AI strategy, and the
+        institutions we build for.
+      </p>
+    </div>
+
+    <div class="blog-grid">
+      {blog.map((p, i) => <BlogCard post={p} delay={`${(i % 3) * 0.06}s`} />)}
+    </div>
+  </section>
+
+  <section
+    class="container insights-view filter-hidden"
+    id="quick"
+    data-filter-target="insights"
+    data-category="quick"
+  >
+    <div class="iv-head reveal">
+      <div>
+        <div class="eyebrow">Quick bits</div>
+        <h2 style="margin-top:12px">Fast notes from <span class="it">the lab.</span></h2>
+      </div>
+      <p class="iv-sub">
+        Engineering snapshots, code experiments, deployment moments and
+        architecture sketches. The unfiltered feed.
+      </p>
+    </div>
+
+    <div class="qb-grid">
+      {quickBits.map((b, i) => (
+        b.kind === "image" ? (
+          <a href="#" class="qb-card is-image reveal" style={`--delay:${(i % 6) * 0.04}s`}>
+            {b.pin && (
+              <span class="qb-pin" title="Pinned">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor" aria-hidden="true">
+                  <path d="M5.5 1l1.7 3.4 3.7.5-2.7 2.6.6 3.7L5.5 9.4 2.2 11.2l.6-3.7L.1 4.9l3.7-.5L5.5 1z"></path>
+                </svg>
+              </span>
+            )}
+            <img src={b.img} alt={b.title} loading="lazy" />
+            <div class="qb-overlay">
+              <div class="qb-overlay-eb">{b.cat}</div>
+              <h4 class="qb-overlay-t">{b.title}</h4>
+              <span class="qb-overlay-open"><Icon name="Arrow" size={14} /></span>
+            </div>
+          </a>
+        ) : b.kind === "code" ? (
+          <a href="#" class="qb-card is-code reveal" style={`--delay:${(i % 6) * 0.04}s`}>
+            <span class="qb-eb">{b.cat}</span>
+            <pre>{b.lines.map((seg) => <span class={seg.cls}>{seg.text}</span>)}</pre>
+          </a>
+        ) : (
+          <a href="#" class="qb-card is-text reveal" style={`--delay:${(i % 6) * 0.04}s`}>
+            <span class="qb-eb">{b.cat}</span>
+            <h4>{b.title}</h4>
+            <p>{b.body}</p>
+            <div class="qb-meta">
+              <span>{b.meta}</span>
+              <span class="dot"></span>
+              <span>Read</span>
+            </div>
+          </a>
+        )
+      ))}
+    </div>
+  </section>
+
+  <section
+    class="container insights-view filter-hidden"
+    id="resources"
+    data-filter-target="insights"
+    data-category="resources"
+  >
+    <div class="iv-head reveal">
+      <div>
+        <div class="eyebrow">Resources</div>
+        <h2 style="margin-top:12px">Tools we use, <span class="it">shared.</span></h2>
+      </div>
+      <p class="iv-sub">
+        Templates, frameworks, and reference documents pulled from real
+        engagements, adapted for public release.
+      </p>
+    </div>
+
+    <div class="res-grid">
+      {resources.map((r, i) => (
+        <a href="#" class="res-card reveal" style={`--delay:${(i % 2) * 0.06}s`}>
+          <div class="res-icon" set:html={resourceIcons[r.icon]}></div>
+          <div class="res-body">
+            <div class="res-tags">
+              {r.tags.map(([cls, label]) => <span class={`res-tag ${cls}`}>{label}</span>)}
+            </div>
+            <h3>{r.title}</h3>
+            <p>{r.desc}</p>
+            <div class="res-meta">
+              {r.meta.map((m, j) => (
+                <>
+                  <span>{m}</span>
+                  {j < r.meta.length - 1 && <span class="dot"></span>}
+                </>
+              ))}
+            </div>
+          </div>
+          <div class="res-arrow"><Icon name="Arrow" size={16} /></div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="service-cta">
+    <div class="sct-inner reveal">
+      <div>
+        <div class="eyebrow">Let's talk</div>
+        <h2 style="margin-top:14px">
+          Let's Build Something <span class="it">that Lasts.</span>
+        </h2>
+        <p>
+          Whether you're planning a platform, modernizing operations, or
+          validating a product idea, we can help structure the right system.
+        </p>
+        <div class="sct-actions">
+          <a href="/contact" class="btn btn-primary">
+            <Icon name="Calendar" size={15} /> Schedule a Call
+          </a>
+          <a href="/case-studies" class="btn btn-ghost btn-arrow">
+            View Case Studies 
+          </a>
+        </div>
+      </div>
+      <div class="sct-aside">
+        <h5>What you get</h5>
+        <ul>
+          <li>30-minute scoping call with a senior engineer</li>
+          <li>Honest read on feasibility, risk, and timeline</li>
+          <li>Reference architecture sketch, if helpful</li>
+          <li>Relevant case studies and precedents</li>
+          <li>No pitch deck, no obligation</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    document.querySelectorAll("[data-insights-meta]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = document.querySelector("[data-insights-meta-output]");
+        if (target) target.textContent = button.dataset.insightsMeta || "";
+      });
+    });
+  </script>
+</MainLayout>

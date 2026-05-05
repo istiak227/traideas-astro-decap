@@ -1,0 +1,38 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import Icon from "../../components/common/Icon.astro";
+import ServiceIcon from "../../components/common/ServiceIcon.astro";
+import { services, processSteps } from "../../data/servicesData.js";
+export function getStaticPaths() {
+  return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+const { service } = Astro.props;
+const otherServices = services.filter((item) => item.slug !== service.slug);
+const serviceIndex = services.findIndex((item) => item.slug === service.slug) + 1;
+const processIcons = ["Discover", "Design", "Develop", "Deploy", "Support"];
+const featureIconsBySlug = {
+  "digital-transformation": ["Compass", "Bolt", "Lock", "Spark"],
+  "mvp-development": ["Bolt", "Spark", "Compass", "Lock"],
+  "ai-automation": ["AI", "Spark", "Lock", "Compass"],
+  consulting: ["Compass", "Spark", "Lock", "Bolt"]
+};
+const componentIconsBySlug = {
+  "digital-transformation": ["Compass", "Web", "Integration", "API", "DevOps", "Admin", "Dashboard", "AI", "Lock"],
+  "mvp-development": ["Compass", "Web", "Mobile", "API", "Admin", "Dashboard", "AI", "DevOps", "Integration"],
+  "ai-automation": ["AI", "Spark", "Bolt", "Integration", "Dashboard", "Web", "API", "Admin", "Lock"],
+  consulting: ["Compass", "Spark", "Lock", "Dashboard", "Admin", "Bolt", "AI", "DevOps", "Integration"]
+};
+const featureIcons = featureIconsBySlug[service.slug] || featureIconsBySlug["digital-transformation"];
+const componentIcons = componentIconsBySlug[service.slug] || componentIconsBySlug["digital-transformation"];
+---
+<MainLayout title={`${service.cardTitle} | Traideas`} description={service.subtitle}>
+  <main class="service-page">
+    <section class="service-hero"><div class="sh-bg"></div><div class="sh-blob"></div><div class="container"><div class="sh-crumb"><a href="/">Home</a><span>›</span><a href="/services">Services</a><span>›</span><span>{service.eyebrow}</span></div><div class="sh-grid"><div class="reveal in"><div class="eyebrow">{service.eyebrow}</div><h1>{service.title[0]}<br /><span class="it">{service.title[1]}</span></h1><p class="sh-sub">{service.subtitle}</p><div class="sh-ctas"><a href="/contact" class="btn btn-primary btn-arrow">Schedule a Call</a><a href="/case-studies" class="btn btn-ghost btn-arrow">View Our Work</a></div></div><div class="sh-visual reveal in"><div class="sv-head"><span class="sv-eyebrow"><Icon name={service.icon} size={14} /> {service.eyebrow}</span><span class="sv-code">SVC / {String(serviceIndex).padStart(2, "0")}</span></div><h3 style="font-family:var(--display);font-size:24px">A measurable engagement, <span class="serif-italic" style="color:var(--brand-ink)">scoped</span> in 48 hours.</h3><p class="sv-copy">Senior team, fixed timeline, and a point person who answers the phone.</p><div class="sv-stat-list">{service.heroStats.map((s) => <div><strong>{s.v}</strong><span>{s.l}</span></div>)}</div><div class="sv-tags">{service.heroTags.map((t) => <span>{t}</span>)}</div><div class="sv-bottom"><span class="pulse">{service.pulse}</span><span>5-yr lifespan target</span></div></div></div></div></section>
+    <section class="service-about"><div class="container sa-grid"><div class="reveal"><div class="eyebrow">About the service</div><h2 class="h-section" style="margin-top:14px">What you get from <span class="serif-italic">this engagement.</span></h2><p class="lead" style="font-size:18px">{service.aboutLead}</p><p>{service.aboutBody}</p></div><div class="sa-features">{service.features.map((f, i) => <div class="sa-feat reveal" style={`--delay:${i * 0.06}s`}><div class="sa-ico"><ServiceIcon name={featureIcons[i]} size={22} /></div><div><h4>{f.t}</h4><p>{f.d}</p></div></div>)}</div></div></section>
+    <section class="service-approach"><div class="container"><div class="block-head reveal"><div><div class="eyebrow">Our approach</div><h2 class="h-section" style="margin-top:14px">How we <span class="serif-italic">deliver this.</span></h2></div><p class="block-head-r">A predictable, five-stage cadence — refined across 100+ engagements.</p></div><div class="sap-grid">{processSteps.map((p, i) => <div class="sap-card reveal" style={`--delay:${i * 0.06}s`}><div class="sap-num">{String(i + 1).padStart(2, "0")} / 05</div><div class="sap-ico"><ServiceIcon name={processIcons[i]} size={22} /></div><h4>{p.t}</h4><p>{p.d}</p></div>)}</div></div></section>
+    <section class="service-impact"><div class="container"><div class="block-head reveal"><div><div class="eyebrow">Impact</div><h2 class="h-section" style="margin-top:14px">Outcomes <span class="serif-italic">we measure.</span></h2></div><p class="block-head-r">Numbers from real engagements — averaged across the portfolio, not cherry-picked.</p></div><div class="si-grid">{service.impact.map((k, i) => <div class="si-card reveal" style={`--delay:${i * 0.06}s`}><div class="si-num">{k.v}<small>{k.s}</small></div><h4>{k.t}</h4><p>{k.d}</p></div>)}</div></div></section>
+    <section class="service-components"><div class="container"><div class="block-head reveal"><div><div class="eyebrow">What's in the box</div><h2 class="h-section" style="margin-top:14px">Service <span class="serif-italic" style="color:var(--brand)">components.</span></h2></div><p class="block-head-r">A modular set of building blocks — pick the ones you need; we'll scope to your envelope.</p></div><div class="sc-grid">{service.components.map((c, i) => <div class="sc-card reveal" style={`--delay:${i * 0.04}s`}><div class="sc-ico"><ServiceIcon name={componentIcons[i]} size={24} /></div><h4>{c}</h4><p>Scoped and delivered as part of the {service.cardTitle} engagement.</p></div>)}</div></div></section>
+    <section class="service-cta" id="service-cta"><div class="sct-inner reveal"><div><div class="eyebrow">Next step</div><h2 style="margin-top:14px">Let's scope this <span class="it">together.</span></h2><p>Thirty minutes with a senior engineer is usually enough to know whether we're a fit. No pitch deck, no obligation.</p><div class="sct-actions"><a href="/contact" class="btn btn-primary"><Icon name="Calendar" size={15} />Schedule a Call</a><a href="/case-studies" class="btn btn-ghost btn-arrow">View Our Work</a></div></div><div class="sct-aside"><h5>What's included</h5><ul>{service.ctaIncludes.map((x) => <li>{x}</li>)}</ul></div></div></section>
+    <section class="service-others"><div class="container"><h3>Other services</h3><div class="so-grid">{otherServices.map((o) => <a class="so-card" href={`/services/${o.slug}`}><span class="so-name">{o.cardTitle}</span><span class="so-arrow">→</span></a>)}</div></div></section>
+  </main>
+</MainLayout>

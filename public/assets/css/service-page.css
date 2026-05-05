@@ -1,0 +1,531 @@
+/* ——— Service detail page (dynamic template) ——— */
+
+.service-page { background: var(--paper); }
+
+/* Hero */
+.service-hero {
+  position: relative;
+  padding: 80px 0 80px;
+  overflow: hidden;
+}
+.service-hero .sh-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(11,13,16,.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(11,13,16,.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 65% 35%, #000 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at 65% 35%, #000 30%, transparent 70%);
+}
+.service-hero .sh-blob {
+  position: absolute; top: -120px; right: -160px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle at 30% 30%, rgba(141,153,206,.32), transparent 60%);
+  filter: blur(20px); pointer-events: none;
+}
+.service-hero .sh-crumb {
+  display: inline-flex; gap: 8px; align-items: center;
+  font-size: 13px; color: var(--muted); margin-bottom: 24px;
+}
+.service-hero .sh-crumb a { color: var(--ink); font-weight: 500; }
+.service-hero .sh-crumb a:hover { color: var(--brand-ink); }
+
+.service-hero .sh-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 60px;
+  align-items: center;
+  position: relative;
+}
+.service-hero h1 {
+  font-family: var(--display); font-weight: 900;
+  font-size: clamp(48px, 6.5vw, 92px);
+  line-height: .96; letter-spacing: -0.035em;
+  margin: 14px 0 24px;
+}
+.service-hero h1 .it {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  color: var(--brand-ink);
+}
+.service-hero p.sh-sub {
+  font-size: 19px; line-height: 1.55; color: var(--graphite);
+  max-width: 52ch; margin: 0 0 32px;
+}
+.service-hero .sh-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.service-hero .sh-visual {
+  position: relative;
+  height: 480px;
+  background: var(--white);
+  border: 1px solid var(--hair);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px -40px rgba(11,13,16,.18);
+}
+.service-hero .sh-visual::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 90% 0%, rgba(141,153,206,.18), transparent 50%);
+  pointer-events: none;
+}
+.service-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+.service-icon svg {
+  display: block;
+  width: var(--icon-size, 22px);
+  height: var(--icon-size, 22px);
+}
+.service-hero .sh-visual .sv-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+.service-hero .sh-visual .sv-eyebrow {
+  font-family: var(--display); font-weight: 700; font-size: 13px;
+  letter-spacing: .04em; color: var(--brand-ink);
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--brand-tint-2);
+  padding: 6px 12px; border-radius: 999px;
+}
+.service-hero .sh-visual .sv-code {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.service-hero .sh-visual .sv-copy {
+  font-size: 14px;
+  color: var(--graphite);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 42ch;
+}
+.service-hero .sh-visual .sv-stat-list {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; margin-top: 24px;
+}
+.service-hero .sh-visual .sv-stat-list > div {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+.service-hero .sh-visual .sv-stat-list strong {
+  display: block; font-family: var(--display); font-weight: 900;
+  font-size: 30px; letter-spacing: -0.025em; line-height: 1;
+  color: var(--ink);
+}
+.service-hero .sh-visual .sv-stat-list span {
+  display: block; margin-top: 6px; font-size: 12px; color: var(--muted);
+}
+.service-hero .sh-visual .sv-tags {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px;
+}
+.service-hero .sh-visual .sv-tags span {
+  padding: 5px 10px; background: var(--mist);
+  border-radius: 999px; font-size: 12px; color: var(--ink); font-weight: 500;
+}
+.service-hero .sh-visual .sv-bottom {
+  position: absolute; left: 32px; right: 32px; bottom: 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px; color: var(--muted);
+}
+.service-hero .sh-visual .sv-bottom .pulse {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 600; color: var(--ink);
+}
+.service-hero .sh-visual .sv-bottom .pulse::before {
+  content: ''; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--sage);
+  box-shadow: 0 0 0 4px rgba(188,207,183,.35);
+  animation: shPulse 1.8s ease-in-out infinite;
+}
+.service-hero .sh-visual.services-index-visual .services-index-eyebrow::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--sage);
+  box-shadow: 0 0 0 4px rgba(188,207,183,.35);
+  animation: shPulse 1.8s ease-in-out infinite;
+}
+.service-hero .sh-visual.services-index-visual {
+  height: 540px;
+}
+.service-hero .sh-visual.services-index-visual .services-index-tags {
+  margin-top: 26px;
+}
+.service-hero .sh-visual.services-index-visual .services-index-bottom {
+  position: static;
+  margin-top: 34px;
+}
+@keyframes shPulse {
+  0%,100% { box-shadow: 0 0 0 4px rgba(188,207,183,.35); }
+  50% { box-shadow: 0 0 0 8px rgba(188,207,183,.05); }
+}
+
+/* About */
+.service-about { padding: 100px 0; border-top: 1px solid var(--hair); }
+.service-about .sa-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: start;
+}
+.service-about h2 { margin-bottom: 22px; }
+.service-about p {
+  font-size: 17px; line-height: 1.6; color: var(--graphite);
+  max-width: 50ch; margin: 0 0 18px;
+}
+.service-about .sa-features {
+  display: flex; flex-direction: column; gap: 14px;
+}
+.service-about .sa-feat {
+  background: var(--white);
+  border: 1px solid var(--hair);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  display: grid; grid-template-columns: 44px 1fr; gap: 16px;
+  transition: all var(--dur-fast) var(--ease);
+}
+.service-about .sa-feat:hover {
+  border-color: var(--brand);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -25px rgba(60,70,128,.25);
+}
+.service-about .sa-feat .sa-ico {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--brand-tint-2); color: var(--brand-ink);
+  display: flex; align-items: center; justify-content: center;
+}
+.service-about .sa-feat h4 {
+  font-family: var(--display); font-weight: 700;
+  font-size: 16px; letter-spacing: -0.01em; margin: 0 0 4px;
+}
+.service-about .sa-feat p {
+  font-size: 14px; color: var(--graphite); margin: 0; line-height: 1.5;
+  max-width: none;
+}
+
+/* Approach (process) */
+.service-approach {
+  padding: 100px 0;
+  background: linear-gradient(180deg, var(--paper) 0%, var(--cream) 100%);
+}
+.service-approach .sap-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px;
+  position: relative;
+}
+.service-approach .sap-card {
+  background: var(--white); border: 1px solid var(--hair);
+  border-radius: var(--radius-lg); padding: 26px 22px 28px;
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden;
+  transition: all var(--dur) var(--ease);
+  min-height: 250px;
+}
+.service-approach .sap-card:hover {
+  border-color: var(--brand);
+  transform: translateY(-4px);
+  box-shadow: 0 24px 60px -28px rgba(60,70,128,.25);
+}
+.service-approach .sap-num {
+  font-family: var(--display); font-weight: 900;
+  font-size: 13px; color: var(--brand-ink);
+  letter-spacing: .06em;
+  margin-bottom: 24px;
+}
+.service-approach .sap-ico {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--brand-tint-2); color: var(--brand-ink);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+  transition: transform var(--dur) var(--ease);
+}
+.service-approach .sap-card:hover .sap-ico { transform: rotate(-6deg) scale(1.05); }
+.service-approach .sap-card h4 {
+  font-family: var(--display); font-weight: 700;
+  font-size: 18px; letter-spacing: -0.015em; margin: 0 0 8px;
+}
+.service-approach .sap-card p {
+  font-size: 13.5px; color: var(--graphite); line-height: 1.5; margin: 0;
+}
+.service-approach .sap-card::after {
+  content: ''; position: absolute; top: 28px; right: 22px;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--sage);
+}
+
+/* Impact / KPI */
+.service-impact { padding: 100px 0; }
+.service-impact .si-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+}
+.service-impact .si-card {
+  background: var(--white); border: 1px solid var(--hair);
+  border-radius: var(--radius-lg); padding: 32px 28px;
+  position: relative; overflow: hidden;
+  transition: all var(--dur) var(--ease);
+}
+.service-impact .si-card:hover {
+  border-color: var(--ink);
+  transform: translateY(-3px);
+  box-shadow: 0 24px 60px -28px rgba(11,13,16,.18);
+}
+.service-impact .si-card .si-num {
+  font-family: var(--display); font-weight: 900;
+  font-size: 52px; letter-spacing: -0.04em; line-height: 1;
+  color: var(--brand-ink);
+  display: flex; align-items: baseline;
+}
+.service-impact .si-card .si-num small {
+  font-size: 22px; margin-left: 4px; color: var(--brand);
+}
+.service-impact .si-card h4 {
+  font-family: var(--display); font-weight: 700;
+  font-size: 17px; letter-spacing: -0.01em;
+  margin: 22px 0 8px;
+}
+.service-impact .si-card p {
+  font-size: 14px; color: var(--graphite); margin: 0; line-height: 1.5;
+}
+.service-impact .si-card::before {
+  content: ''; position: absolute; top: 22px; right: 24px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--brand);
+}
+
+/* Components grid */
+.service-components {
+  padding: 100px 0;
+  background: var(--ink);
+  color: var(--paper);
+}
+.service-components .h-section,
+.service-components .eyebrow,
+.service-components .block-head-r { color: var(--paper); }
+.service-components .eyebrow { color: rgba(255,255,255,.55); }
+.service-components .block-head-r { color: rgba(255,255,255,.65); }
+.service-components .sc-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.service-components .sc-card {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius-lg);
+  padding: 28px 26px;
+  transition: all var(--dur) var(--ease);
+  cursor: pointer;
+}
+.service-components .sc-card:hover {
+  background: rgba(255,255,255,.07);
+  border-color: var(--brand);
+  transform: translateY(-3px);
+}
+.service-components .sc-ico {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: rgba(141,153,206,.18); color: var(--brand);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+  transition: all var(--dur) var(--ease);
+}
+.service-components .sc-card:hover .sc-ico {
+  background: var(--brand); color: var(--ink);
+  transform: rotate(-6deg);
+}
+.service-components .sc-card h4 {
+  font-family: var(--display); font-weight: 700;
+  font-size: 18px; letter-spacing: -0.015em; margin: 0 0 8px;
+}
+.service-components .sc-card p {
+  font-size: 14px; color: rgba(255,255,255,.6);
+  margin: 0; line-height: 1.5;
+}
+
+/* Final CTA */
+.service-cta {
+  padding: 100px 28px;
+}
+.service-cta .sct-inner {
+  max-width: 1280px; margin: 0 auto;
+  background: var(--white);
+  border: 1px solid var(--hair);
+  border-radius: var(--radius-xl);
+  padding: 80px 60px;
+  display: grid; grid-template-columns: 1.3fr 1fr;
+  gap: 60px; align-items: center;
+  position: relative; overflow: hidden;
+}
+.service-cta .sct-inner::before {
+  content: ''; position: absolute; top: -120px; right: -120px;
+  width: 380px; height: 380px;
+  background: radial-gradient(circle, rgba(141,153,206,.25), transparent 60%);
+  filter: blur(10px); pointer-events: none;
+}
+.service-cta h2 {
+  font-family: var(--display); font-weight: 700;
+  font-size: clamp(34px, 4vw, 52px);
+  letter-spacing: -0.025em; line-height: 1.05;
+  margin: 0 0 18px;
+}
+.service-cta h2 .it {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  color: var(--brand-ink);
+}
+.service-cta p {
+  font-size: 17px; color: var(--graphite);
+  max-width: 44ch; margin: 0 0 28px;
+}
+.service-cta .sct-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.service-cta .sct-aside {
+  background: var(--paper); border: 1px solid var(--hair);
+  border-radius: var(--radius-lg);
+  padding: 28px; position: relative; z-index: 1;
+}
+.service-cta .sct-aside h5 {
+  font-family: var(--body); font-weight: 500; font-size: 11px;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--muted); margin: 0 0 16px;
+}
+.service-cta .sct-aside ul {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.service-cta .sct-aside li {
+  display: flex; gap: 10px; align-items: flex-start;
+  font-size: 14px; color: var(--ink);
+}
+.service-cta .sct-aside li::before {
+  content: '✓'; color: var(--brand-ink); font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Other services strip */
+.service-others {
+  padding: 80px 0; border-top: 1px solid var(--hair);
+}
+.service-others h3 {
+  font-family: var(--display); font-weight: 700;
+  font-size: 28px; letter-spacing: -0.02em; margin: 0 0 28px;
+}
+.service-others .so-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.service-others .so-card {
+  background: var(--white); border: 1px solid var(--hair);
+  border-radius: 18px; padding: 24px 26px;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: all var(--dur-fast) var(--ease);
+}
+.service-others .so-card:hover {
+  background: var(--ink); color: var(--paper); border-color: var(--ink);
+}
+.service-others .so-card .so-name {
+  font-family: var(--display); font-weight: 700;
+  font-size: 16px; letter-spacing: -0.01em;
+}
+.service-others .so-card .so-arrow {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid currentColor; opacity: .5;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--dur-fast) var(--ease);
+}
+.service-others .so-card:hover .so-arrow { opacity: 1; transform: rotate(-45deg); }
+
+/* Responsive */
+@media (max-width: 1180px) {
+  .service-approach .sap-grid { grid-template-columns: repeat(3, 1fr); }
+  .service-impact .si-grid { grid-template-columns: repeat(2, 1fr); }
+  .service-components .sc-grid { grid-template-columns: repeat(2, 1fr); }
+  .service-others .so-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 980px) {
+  .service-hero { padding: 60px 0 70px; }
+  .service-hero .sh-grid { grid-template-columns: 1fr; gap: 50px; }
+  .service-hero .sh-visual {
+    height: auto;
+    padding: 28px;
+    max-width: 560px;
+  }
+  .service-hero .sh-visual.services-index-visual {
+    height: auto;
+  }
+  .service-hero .sh-visual.services-index-visual .services-index-bottom {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--hair);
+  }
+  .service-hero .sh-visual .sv-bottom {
+    position: static;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--hair);
+  }
+  .service-about { padding: 80px 0; }
+  .service-about .sa-grid { grid-template-columns: 1fr; gap: 36px; }
+  .service-approach { padding: 80px 0; }
+  .service-approach .sap-grid { grid-template-columns: repeat(2, 1fr); }
+  .service-approach .sap-card { min-height: 220px; }
+  .service-impact { padding: 80px 0; }
+  .service-components { padding: 80px 0; }
+  .service-cta { padding: 80px 22px; }
+  .service-cta .sct-inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 56px 40px;
+  }
+  .service-others { padding: 64px 0; }
+  .service-others .so-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 680px) {
+  .service-hero { padding: 44px 0 56px; }
+  .service-hero .sh-crumb { margin-bottom: 18px; font-size: 12px; flex-wrap: wrap; }
+  .service-hero p.sh-sub { font-size: 17px; margin-bottom: 26px; }
+  .service-hero .sh-ctas .btn { flex: 1 1 auto; }
+  .service-hero .sh-visual { padding: 22px; border-radius: 18px; }
+  .service-hero .sh-visual .sv-stat-list { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .service-hero .sh-visual .sv-stat-list strong { font-size: 26px; }
+  .service-hero .sh-visual .sv-stat-list > div { padding: 14px 16px; }
+
+  .service-about { padding: 56px 0; }
+  .service-about p { font-size: 16px; }
+  .service-about .sa-feat { padding: 18px 20px; gap: 14px; grid-template-columns: 40px 1fr; }
+  .service-about .sa-feat .sa-ico { width: 40px; height: 40px; }
+
+  .service-approach { padding: 56px 0; }
+  .service-approach .sap-grid { grid-template-columns: 1fr; }
+  .service-approach .sap-card { min-height: 0; padding: 22px 20px 24px; }
+
+  .service-impact { padding: 56px 0; }
+  .service-impact .si-grid { grid-template-columns: 1fr; }
+  .service-impact .si-card { padding: 26px 24px; }
+  .service-impact .si-card .si-num { font-size: 44px; }
+
+  .service-components { padding: 56px 0; }
+  .service-components .sc-grid { grid-template-columns: 1fr; }
+  .service-components .sc-card { padding: 24px 22px; }
+
+  .service-cta { padding: 56px 14px; }
+  .service-cta .sct-inner { padding: 40px 26px; border-radius: 24px; }
+  .service-cta h2 { font-size: clamp(28px, 7vw, 38px); }
+  .service-cta p { font-size: 16px; margin-bottom: 22px; }
+  .service-cta .sct-actions .btn { flex: 1 1 auto; }
+  .service-cta .sct-aside { padding: 22px; }
+
+  .service-others { padding: 48px 0; }
+  .service-others h3 { font-size: 22px; margin-bottom: 20px; }
+  .service-others .so-card { padding: 20px 22px; }
+}
+
+@media (max-width: 360px) {
+  .service-hero h1 { font-size: clamp(36px, 11vw, 52px); }
+  .service-hero .sh-visual .sv-stat-list { grid-template-columns: 1fr; }
+}

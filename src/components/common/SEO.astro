@@ -1,0 +1,17 @@
+---
+import { seoData } from "../../data/seoData.js";
+const { title, description, image, canonical } = Astro.props;
+const meta = {
+  title: title || seoData.default.title,
+  description: description || seoData.default.description,
+  image: image || seoData.default.image
+};
+---
+<title>{meta.title}</title>
+<meta name="description" content={meta.description} />
+{canonical && <link rel="canonical" href={canonical} />}
+<meta property="og:title" content={meta.title} />
+<meta property="og:description" content={meta.description} />
+<meta property="og:image" content={meta.image} />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />

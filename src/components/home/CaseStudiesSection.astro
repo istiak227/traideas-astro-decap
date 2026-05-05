@@ -1,0 +1,37 @@
+---
+import SectionHeader from "../common/SectionHeader.astro";
+import { caseStudies } from "../../data/caseStudiesData.js";
+---
+<section class="block" id="case-studies">
+  <div class="container">
+    <SectionHeader eyebrow="Selected work" title={'Shipped systems, <span class="serif-italic">real users.</span>'} description="A sample of recent engagements across healthcare, public sector, energy, and commerce. Each project is backed by measurable outcomes." />
+  </div>
+  <div class="container cs-slider-wrap" data-case-slider>
+    <div class="cs-track" data-case-track>
+      {caseStudies.map((project, i) => (
+        <a href={`/case-studies/${project.slug}`} class="cs-card reveal" style={`--delay:${i * 0.06}s`}>
+          <div class="cs-media"><div class="cs-mock"><div class="proj-mock" style={`background:linear-gradient(135deg,${project.colorTint},#f6f4ec)`}><strong style="font-size:11px">{project.shortTitle}</strong><div class="pm-chips"><span class="pm-chip g">{project.industry}</span><span class="pm-chip a">{project.location}</span></div><div class="pm-bar"></div><div class="pm-bar" style="width:80%"></div><div class="pm-bar" style="width:60%"></div></div></div></div>
+          <div class="cs-body"><span class="cs-tag">{project.industry}</span><h3>{project.title}</h3><p>{project.summary}</p><div class="cs-meta"><div><span>Client</span><strong>{project.clientShort}</strong></div><div><span>Location</span><strong>{project.location}</strong></div></div></div>
+        </a>
+      ))}
+    </div>
+    <div class="cs-controls">
+      <div class="cs-count">
+        <strong data-case-current>01</strong>
+        <span>/</span>
+        <span data-case-total>{String(caseStudies.length).padStart(2, "0")}</span>
+      </div>
+      <div class="cs-progress" aria-hidden="true">
+        <div class="cs-progress-bar" data-case-progress style={`width:${100 / caseStudies.length}%`}></div>
+      </div>
+      <div class="cs-nav">
+        <button class="cs-btn" type="button" data-case-prev aria-label="Previous case study">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3l-5 5 5 5" /></svg>
+        </button>
+        <button class="cs-btn" type="button" data-case-next aria-label="Next case study">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5" /></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

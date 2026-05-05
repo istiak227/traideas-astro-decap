@@ -1,0 +1,39 @@
+---
+import { cta } from "../../data/homeData.js";
+import Icon from "../common/Icon.astro";
+
+const dots = Array.from({ length: 40 }, (_, i) => {
+  const x = 50 + (i % 10) * 34;
+  const y = 40 + Math.floor(i / 10) * 55;
+  const opacity = Math.max(0.15, Math.sin(i * 0.6) * 0.5 + 0.6);
+  const radius = 4 + Math.sin(i) * 2;
+  return { x, y, opacity, radius };
+});
+---
+<section class="cta-banner reveal">
+  <div class="cta-banner-bg"></div>
+  <div class="cta-banner-inner">
+    <div>
+      <h2 set:html={cta.title.replace("meaningful", '<span class="it">meaningful</span>')}></h2>
+      <p>{cta.description}</p>
+      <div class="cta-banner-actions">
+        <a href={cta.primary.href} class="btn btn-primary"><Icon name="Calendar" size={15} />{cta.primary.label}</a>
+        <a href={cta.secondary.href} target="_blank" rel="noreferrer" download class="btn btn-ghost"><Icon name="Download" size={15} />{cta.secondary.label}</a>
+      </div>
+    </div>
+    <div class="viz">
+      <svg viewBox="0 0 400 260" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="cta-gradient" x1="0" x2="1">
+            <stop offset="0" stop-color="#8D99CE" />
+            <stop offset="1" stop-color="#BCCFB7" />
+          </linearGradient>
+        </defs>
+        {dots.map((dot) => <circle cx={dot.x} cy={dot.y} r={dot.radius} fill="url(#cta-gradient)" opacity={dot.opacity} />)}
+        <path d="M60 200 Q160 120 260 180 T380 100" stroke="#8D99CE" stroke-width="2" fill="none" />
+        <circle cx="380" cy="100" r="6" fill="white" />
+        <circle cx="380" cy="100" r="12" fill="none" stroke="white" opacity=".4" />
+      </svg>
+    </div>
+  </div>
+</section>
