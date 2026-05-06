@@ -1,4 +1,7 @@
 ---
+seo:
+  title: "Moments | Traideas"
+  description: "A glimpse into our journey, culture, teamwork, and the people behind Traideas."
 hero: 
   eyebrow: "Our story · Life at Traideas"
   title: "Moments That Shape"

@@ -1,0 +1,61 @@
+---
+seo: 
+  title: "Contact | Traideas"
+  description: "Schedule a call with Traideas to discuss your software, AI automation, digital transformation, or consulting needs."
+hero: 
+  eyebrow: "Contact · Schedule a call"
+  title: "Let's build your next digital system together."
+  subtitle: "Book a call with Traideas to discuss software development, AI automation, digital transformation, or technical consulting needs."
+  highlights: 
+    - "Enterprise Software"
+    - "AI Automation"
+    - "Digital Transformation"
+    - "Technical Consulting"
+calendlyUrl: "https://calendly.com/traideas/15"
+offices: 
+  - title: "Narayanganj Office"
+    address: "6/2, S. S Alam Khandaker Road, Masdair, Narayanganj-1400."
+    image: "/assets/images/others/narayanganj.webp"
+    tag: "Headquarter"
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=Traideas+Narayanganj"
+  - title: "Dhaka Office"
+    address: "383, Razzak Plaza, Moghbazar, Dhaka-1217."
+    image: "/assets/images/others/dhaka.webp"
+    tag: "Corporate Office"
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=Razzak+Plaza+Moghbazar+Dhaka"
+email: "info@traideas.com"
+phone: "+880 19 222 93117"
+workingHours: "Sun – Thu · 09:00 AM – 7:00 PM (GMT+6)"
+highlights: 
+  - label: "Enterprise Software"
+    icon: "◇"
+  - label: "AI Automation"
+    icon: "✧"
+  - label: "Digital Transformation"
+    icon: "↻"
+  - label: "Technical Consulting"
+    icon: "◎"
+calendarTitle: "Schedule a 30-min intro call"
+calendarTag: "Free"
+locationsIntro: 
+  eyebrow: "Find us"
+  title: "Visit our <span class=\"serif-italic\">offices.</span>"
+  description: "Traideas operates from Narayanganj and Dhaka — serving clients across Bangladesh and globally."
+directCta: 
+  eyebrow: "Have a project in mind?"
+  title: "Share your idea, we'll help you<br /><span class=\"it\">define the path.</span>"
+  description: "Tell us about your goals, constraints, and timeline. We'll reply within one business day with a structured response and a recommended next step."
+  actions:
+    - label: "Schedule a Call"
+      href: "#calendly"
+      style: "primary"
+    - label: "View Our Work"
+      href: "/case-studies"
+      style: "ghost"
+  asideTitle: "What happens next"
+  items:
+    - "30-minute discovery call within 48 hours"
+    - "NDA signed before any specifics shared"
+    - "Written scope & estimate delivered in 5 business days"
+    - "Direct line to founders, no account managers"
+---

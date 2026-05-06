@@ -2,11 +2,10 @@
 import MainLayout from "../../layouts/MainLayout.astro";
 import Icon from "../../components/common/Icon.astro";
 import BlogCard from "../../components/common/BlogCard.astro";
-import { insightCategories } from "../../data/insightsData.js";
-import { getBlogPosts, getQuickBites, getResources } from "../../lib/content.js";
-import { seoData } from "../../data/seoData.js";
+import { getBlogPosts, getInsightsPageData, getQuickBites, getResources } from "../../lib/content.js";
 
-const [blog, quickBits, resources] = await Promise.all([getBlogPosts(), getQuickBites(), getResources()]);
+const [blog, quickBits, resources, page] = await Promise.all([getBlogPosts(), getQuickBites(), getResources(), getInsightsPageData()]);
+const insightCategories = page.categories;
 
 const counts = {
   blog: blog.length,
@@ -34,24 +33,23 @@ const resourceIcons = {
 };
 ---
 
-<MainLayout title={seoData.pages.insights.title} description={seoData.pages.insights.description}>
+<MainLayout title={page.seo?.title} description={page.seo?.description}>
   <section class="insights-hero">
     <div class="hero-bg-grid"></div>
     <div class="hero-blob"></div>
     <div class="container ih-grid">
       <div class="ih-left reveal in">
-        <div class="eyebrow">Insights · Engineering desk</div>
+        <div class="eyebrow">{page.hero.eyebrow}</div>
         <h1 class="h-display">
-          Insights That Shape <br />
-          <span class="accent">Better Systems.</span>
+          {page.hero.title} <br />
+          <span class="accent">{page.hero.accent}</span>
         </h1>
         <p class="ih-sub">
-          We share what we learn while building scalable platforms, solving
-          institutional problems, and designing systems that last.
+          {page.hero.subtitle}
         </p>
         <div class="ih-ctas">
-          <a href="#blog" class="btn btn-primary btn-arrow">Explore Articles</a>
-          <a href="#resources" class="btn btn-ghost btn-arrow">Browse Resources</a>
+          <a href={page.hero.primaryCta.href} class="btn btn-primary btn-arrow">{page.hero.primaryCta.label}</a>
+          <a href={page.hero.secondaryCta.href} class="btn btn-ghost btn-arrow">{page.hero.secondaryCta.label}</a>
         </div>
         <div class="ih-meta">
           <div class="ih-meta-item">
@@ -72,10 +70,10 @@ const resourceIcons = {
       <div class="ih-right reveal in" style="--delay:.15s">
         <div class="ih-collage">
           <div class="ih-tile t-1">
-            <img src="/assets/images/culture/culture-04.jpg" alt="Engineering work session" />
+            <img src={page.hero.images[0].src} alt={page.hero.images[0].alt} />
           </div>
           <div class="ih-tile t-2">
-            <img src="/assets/images/culture/culture-07.jpg" alt="Design review" />
+            <img src={page.hero.images[1].src} alt={page.hero.images[1].alt} />
           </div>
           <div class="ih-card">
             <div class="ih-card-eb">Featured · 8 min read</div>
@@ -115,12 +113,11 @@ const resourceIcons = {
   >
     <div class="iv-head reveal">
       <div>
-        <div class="eyebrow">Articles</div>
-        <h2 style="margin-top:12px">From the <span class="it">engineering desk.</span></h2>
+        <div class="eyebrow">{page.sections.blog.eyebrow}</div>
+        <h2 style="margin-top:12px" set:html={page.sections.blog.title}></h2>
       </div>
       <p class="iv-sub">
-        Long-form pieces on engineering practice, AI strategy, and the
-        institutions we build for.
+        {page.sections.blog.description}
       </p>
     </div>
 
@@ -137,12 +134,11 @@ const resourceIcons = {
   >
     <div class="iv-head reveal">
       <div>
-        <div class="eyebrow">Quick bits</div>
-        <h2 style="margin-top:12px">Fast notes from <span class="it">the lab.</span></h2>
+        <div class="eyebrow">{page.sections.quick.eyebrow}</div>
+        <h2 style="margin-top:12px" set:html={page.sections.quick.title}></h2>
       </div>
       <p class="iv-sub">
-        Engineering snapshots, code experiments, deployment moments and
-        architecture sketches. The unfiltered feed.
+        {page.sections.quick.description}
       </p>
     </div>
 
@@ -193,12 +189,11 @@ const resourceIcons = {
   >
     <div class="iv-head reveal">
       <div>
-        <div class="eyebrow">Resources</div>
-        <h2 style="margin-top:12px">Tools we use, <span class="it">shared.</span></h2>
+        <div class="eyebrow">{page.sections.resources.eyebrow}</div>
+        <h2 style="margin-top:12px" set:html={page.sections.resources.title}></h2>
       </div>
       <p class="iv-sub">
-        Templates, frameworks, and reference documents pulled from real
-        engagements, adapted for public release.
+        {page.sections.resources.description}
       </p>
     </div>
 
@@ -230,32 +225,21 @@ const resourceIcons = {
   <section class="service-cta">
     <div class="sct-inner reveal">
       <div>
-        <div class="eyebrow">Let's talk</div>
-        <h2 style="margin-top:14px">
-          Let's Build Something <span class="it">that Lasts.</span>
-        </h2>
-        <p>
-          Whether you're planning a platform, modernizing operations, or
-          validating a product idea, we can help structure the right system.
-        </p>
+        <div class="eyebrow">{page.cta.eyebrow}</div>
+        <h2 style="margin-top:14px" set:html={page.cta.title}></h2>
+        <p>{page.cta.description}</p>
         <div class="sct-actions">
-          <a href="/contact" class="btn btn-primary">
-            <Icon name="Calendar" size={15} /> Schedule a Call
+          <a href={page.cta.primary.href} class="btn btn-primary">
+            <Icon name="Calendar" size={15} /> {page.cta.primary.label}
           </a>
-          <a href="/case-studies" class="btn btn-ghost btn-arrow">
-            View Case Studies 
+          <a href={page.cta.secondary.href} class="btn btn-ghost btn-arrow">
+            {page.cta.secondary.label}
           </a>
         </div>
       </div>
       <div class="sct-aside">
-        <h5>What you get</h5>
-        <ul>
-          <li>30-minute scoping call with a senior engineer</li>
-          <li>Honest read on feasibility, risk, and timeline</li>
-          <li>Reference architecture sketch, if helpful</li>
-          <li>Relevant case studies and precedents</li>
-          <li>No pitch deck, no obligation</li>
-        </ul>
+        <h5>{page.cta.asideTitle}</h5>
+        <ul>{page.cta.items.map((item) => <li>{item}</li>)}</ul>
       </div>
     </div>
   </section>

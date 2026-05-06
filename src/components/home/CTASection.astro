@@ -1,6 +1,7 @@
 ---
-import { cta } from "../../data/homeData.js";
+import { cta as fallbackCta } from "../../data/homeData.js";
 import Icon from "../common/Icon.astro";
+const { cta = fallbackCta } = Astro.props;
 
 const dots = Array.from({ length: 40 }, (_, i) => {
   const x = 50 + (i % 10) * 34;

@@ -1,9 +1,8 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
 import Icon from "../../components/common/Icon.astro";
-import { getCaseStudies, getIndustries } from "../../lib/content.js";
-import { seoData } from "../../data/seoData.js";
-const [caseStudies, industries] = await Promise.all([getCaseStudies(), getIndustries()]);
+import { getCaseStudies, getCaseStudiesPageData, getIndustries } from "../../lib/content.js";
+const [caseStudies, industries, page] = await Promise.all([getCaseStudies(), getIndustries(), getCaseStudiesPageData()]);
 const ctaDots = Array.from({ length: 40 }, (_, i) => ({
   x: 50 + (i % 10) * 34,
   y: 40 + Math.floor(i / 10) * 55,
@@ -11,8 +10,8 @@ const ctaDots = Array.from({ length: 40 }, (_, i) => ({
   radius: 4 + Math.sin(i) * 2
 }));
 ---
-<MainLayout title={seoData.pages.caseStudies.title} description={seoData.pages.caseStudies.description}>
-  <section class="cs-hero"><div class="cs-hero-bg"></div><div class="cs-hero-blob"></div><div class="cs-hero-blob-2"></div><div class="container"><div class="cs-hero-grid"><div class="reveal in"><div class="eyebrow" style="margin-bottom:18px">Case Studies</div><h1 class="h-display" style="margin-bottom:24px">Real systems.<br /><span class="serif-italic" style="color:var(--brand-ink)">Real impact.</span></h1><p class="hero-sub" style="margin-bottom:32px">Traideas delivers scalable software, intelligent automation, and robust digital infrastructure for governments, hospitals, utilities, and enterprises worldwide.</p><div class="hero-ctas"><a href="#work" class="btn btn-primary btn-arrow">Explore Our Work</a><a href="/contact" class="btn btn-ghost"><Icon name="Calendar" size={15} />Schedule a Call</a></div></div><div class="cs-hero-visual-col reveal in"><div class="sh-visual"><div class="sv-eyebrow"><div class="pulse-dot"></div>Delivered Across 5+ Industries</div><div class="sv-stat-list"><div><strong>20+</strong><span>Systems Delivered</span></div><div><strong>6</strong><span>Industries Served</span></div><div><strong>3</strong><span>Countries</span></div><div><strong>500K+</strong><span>Records Managed</span></div></div><div class="sv-tags">{["Government", "Healthcare", "Energy", "Education", "NGO", "Enterprise"].map((tag) => <span>{tag}</span>)}</div><div class="sv-bottom"><span class="pulse"><span class="pulse-dot-2"></span>Ongoing partnerships</span><span>Bangladesh · Canada · New Zealand</span></div></div></div></div></div></section>
+<MainLayout title={page.seo?.title} description={page.seo?.description}>
+  <section class="cs-hero"><div class="cs-hero-bg"></div><div class="cs-hero-blob"></div><div class="cs-hero-blob-2"></div><div class="container"><div class="cs-hero-grid"><div class="reveal in"><div class="eyebrow" style="margin-bottom:18px">{page.hero.eyebrow}</div><h1 class="h-display" style="margin-bottom:24px">{page.hero.title}<br /><span class="serif-italic" style="color:var(--brand-ink)">{page.hero.accent}</span></h1><p class="hero-sub" style="margin-bottom:32px">{page.hero.subtitle}</p><div class="hero-ctas"><a href={page.hero.primaryCta.href} class="btn btn-primary btn-arrow">{page.hero.primaryCta.label}</a><a href={page.hero.secondaryCta.href} class="btn btn-ghost"><Icon name="Calendar" size={15} />{page.hero.secondaryCta.label}</a></div></div><div class="cs-hero-visual-col reveal in"><div class="sh-visual"><div class="sv-eyebrow"><div class="pulse-dot"></div>{page.visual.eyebrow}</div><div class="sv-stat-list">{page.visual.stats.map((stat) => <div><strong>{stat.value}</strong><span>{stat.label}</span></div>)}</div><div class="sv-tags">{page.visual.tags.map((tag) => <span>{tag}</span>)}</div><div class="sv-bottom"><span class="pulse"><span class="pulse-dot-2"></span>{page.visual.bottomLeft}</span><span>{page.visual.bottomRight}</span></div></div></div></div></div></section>
   <div class="cs-filter-wrap" id="work"><div class="container"><div class="cs-filter-inner" data-filter-group="case-studies"><span class="cs-filter-label">Filter:</span>{industries.map((ind, i) => <button class:list={["cs-filter-btn", i === 0 && "active"]} data-filter={ind}>{ind}<span class="cs-filter-count">{ind === "All" ? caseStudies.length : caseStudies.filter((cs) => cs.industry === ind).length}</span></button>)}</div></div></div>
   <section class="cs-grid-section"><div class="container"><div class="cs-grid">{caseStudies.map((cs, i) => <a href={`/case-studies/${cs.slug}`} class="cs-card reveal" data-filter-target="case-studies" data-category={cs.industry} style={`--delay:${i * 0.07}s`}><div class="cs-media"><div class="cs-mock"><div class="proj-mock" style={`background:linear-gradient(135deg,${cs.colorTint},#f6f4ec)`}><strong style="font-size:11px">{cs.shortTitle}</strong><div class="pm-chips"><span class="pm-chip g">{cs.industry}</span><span class="pm-chip a">{cs.location}</span></div><div class="pm-bar"></div><div class="pm-bar" style="width:80%"></div></div></div></div><div class="cs-body"><span class="cs-tag">{cs.industry}</span><h3 class="cs-card-title-clamp">{cs.title}</h3><p class="cs-card-desc-clamp">{cs.summary}</p><div class="cs-meta"><div><span>Client</span><strong>{cs.clientShort}</strong></div><div><span>Location</span><strong>{cs.location}</strong></div></div></div></a>)}</div></div></section>
   <div class="case-studies-cta-wrap">
@@ -20,12 +19,12 @@ const ctaDots = Array.from({ length: 40 }, (_, i) => ({
       <div class="cta-banner-bg"></div>
       <div class="cta-banner-inner">
         <div>
-          <div class="eyebrow case-studies-cta-eyebrow">Work with us</div>
-          <h2>Have a complex workflow that needs a <span class="it">better system?</span></h2>
-          <p>Let's explore how Traideas can design, develop, and scale the right digital solution for your organization.</p>
+          <div class="eyebrow case-studies-cta-eyebrow">{page.cta.eyebrow}</div>
+          <h2 set:html={page.cta.title}></h2>
+          <p>{page.cta.description}</p>
           <div class="cta-banner-actions">
-            <a href="/contact" class="btn btn-primary"><Icon name="Calendar" size={15} />Schedule a Call</a>
-            <a href="/services" class="btn btn-ghost">Our Services <Icon name="Arrow" size={14} /></a>
+            <a href={page.cta.primary.href} class="btn btn-primary"><Icon name="Calendar" size={15} />{page.cta.primary.label}</a>
+            <a href={page.cta.secondary.href} class="btn btn-ghost">{page.cta.secondary.label} <Icon name="Arrow" size={14} /></a>
           </div>
         </div>
         <div class="viz">

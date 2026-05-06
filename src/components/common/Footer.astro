@@ -1,8 +1,9 @@
 ---
 import { siteData } from "../../data/siteData.js";
-import { services } from "../../data/servicesData.js";
+import { getServices } from "../../lib/content.js";
 import Icon from "./Icon.astro";
 const currentYear = new Date().getFullYear();
+const services = await getServices();
 ---
 <footer class="footer" id="contact">
   <div class="container">

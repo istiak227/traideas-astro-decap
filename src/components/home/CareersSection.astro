@@ -1,19 +1,33 @@
 ---
+const {
+  section = {
+    eyebrow: "Careers",
+    title: 'Join a team <span class="serif-italic">building real systems.</span>',
+    description: "Work with passionate engineers solving real-world problems across healthcare, public sector, energy, and commerce.",
+    cta: { label: "Visit Careers", href: "/careers" },
+    stats: [
+      { value: "4.7", label: "Glassdoor rating" },
+      { value: "92%", label: "Team retention" },
+      { value: "25+", label: "Engineers" }
+    ],
+    cardTitle: "Build systems that matter",
+    image: "/assets/images/others/job.webp",
+    imageAlt: "Open roles at Traideas"
+  }
+} = Astro.props;
 ---
 <section class="container careers reveal" id="careers">
   <div class="careers-copy">
-    <div class="eyebrow">Careers</div>
-    <h2 class="h-section" style="margin-top:14px">Join a team <span class="serif-italic">building real systems.</span></h2>
-    <p>Work with passionate engineers solving real-world problems across healthcare, public sector, energy, and commerce.</p>
-    <a href="/careers" class="btn btn-primary btn-arrow">Visit Careers</a>
+    <div class="eyebrow">{section.eyebrow}</div>
+    <h2 class="h-section" style="margin-top:14px" set:html={section.title}></h2>
+    <p>{section.description}</p>
+    <a href={section.cta.href} class="btn btn-primary btn-arrow">{section.cta.label}</a>
     <div class="careers-stats">
-      <div><strong>4.7</strong><span>Glassdoor rating</span></div>
-      <div><strong>92%</strong><span>Team retention</span></div>
-      <div><strong>25+</strong><span>Engineers</span></div>
+      {section.stats.map((stat) => <div><strong>{stat.value}</strong><span>{stat.label}</span></div>)}
     </div>
   </div>
   <div class="open-roles">
-    <div class="open-role-title">Build systems that matter</div>
-    <div class="open-role-image"><img src="/assets/images/others/job.webp" alt="Open roles at Traideas" loading="lazy" /></div>
+    <div class="open-role-title">{section.cardTitle}</div>
+    <div class="open-role-image"><img src={section.image} alt={section.imageAlt} loading="lazy" /></div>
   </div>
 </section>

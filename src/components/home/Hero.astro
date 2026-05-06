@@ -1,19 +1,20 @@
 ---
 import { homeHero } from "../../data/homeData.js";
+const { hero = homeHero } = Astro.props;
 ---
 <section class="hero">
   <div class="hero-bg-grid"></div>
   <div class="hero-blob"></div>
   <div class="container hero-grid">
     <div class="hero-left">
-      <h1 class="h-display reveal in" style="--delay:.05s">{homeHero.title.replace("work for you.", "")}<span class="accent">work for you.</span></h1>
-      <p class="hero-sub reveal in" style="--delay:.15s">{homeHero.subtitle}</p>
+      <h1 class="h-display reveal in" style="--delay:.05s">{hero.title.replace("work for you.", "")}<span class="accent">work for you.</span></h1>
+      <p class="hero-sub reveal in" style="--delay:.15s">{hero.subtitle}</p>
       <div class="hero-ctas reveal in" style="--delay:.25s">
-        <a href={homeHero.primaryCta.href} class="btn btn-primary btn-arrow">{homeHero.primaryCta.label}</a>
-        <a href={homeHero.secondaryCta.href} class="btn btn-ghost btn-arrow">{homeHero.secondaryCta.label}</a>
+        <a href={hero.primaryCta.href} class="btn btn-primary btn-arrow">{hero.primaryCta.label}</a>
+        <a href={hero.secondaryCta.href} class="btn btn-ghost btn-arrow">{hero.secondaryCta.label}</a>
       </div>
       <div class="hero-stats reveal in" style="--delay:.35s">
-        {homeHero.stats.map((stat) => (
+        {hero.stats.map((stat) => (
           <div class="hero-stat">
             <div class="num" data-counter data-target={stat.target} data-suffix={stat.suffix}>{stat.target}<span class="num-suffix">{stat.suffix}</span></div>
             <div class="label">{stat.label}</div>
@@ -23,8 +24,8 @@ import { homeHero } from "../../data/homeData.js";
     </div>
     <div class="hero-right reveal in" style="--delay:.45s">
       <div class="hero-collage">
-        {homeHero.images.map((image, i) => <div class={`tile t${i + 1}`}><img src={image.src} alt={image.alt} width="420" height="420" /></div>)}
-        {homeHero.chips.map((chip, i) => <div class={`chip chip-${i + 1}`}><span class="pulse"></span>{chip}</div>)}
+        {hero.images.map((image, i) => <div class={`tile t${i + 1}`}><img src={image.src} alt={image.alt} width="420" height="420" /></div>)}
+        {hero.chips.map((chip, i) => <div class={`chip chip-${i + 1}`}><span class="pulse"></span>{chip}</div>)}
       </div>
     </div>
   </div>

@@ -2,11 +2,14 @@
 import MainLayout from "../../layouts/MainLayout.astro";
 import Icon from "../../components/common/Icon.astro";
 import ServiceIcon from "../../components/common/ServiceIcon.astro";
-import { services, processSteps } from "../../data/servicesData.js";
-export function getStaticPaths() {
+import { getServices, getServicesPageData } from "../../lib/content.js";
+export async function getStaticPaths() {
+  const services = await getServices();
   return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
 }
 const { service } = Astro.props;
+const { processSteps } = await getServicesPageData();
+const services = await getServices();
 const otherServices = services.filter((item) => item.slug !== service.slug);
 const serviceIndex = services.findIndex((item) => item.slug === service.slug) + 1;
 const processIcons = ["Discover", "Design", "Develop", "Deploy", "Support"];

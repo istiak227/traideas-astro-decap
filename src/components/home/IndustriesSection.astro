@@ -1,7 +1,8 @@
 ---
 import SectionHeader from "../common/SectionHeader.astro";
 import Icon from "../common/Icon.astro";
-import { industries } from "../../data/homeData.js";
+import { industries as fallbackIndustries } from "../../data/homeData.js";
+const { industries = fallbackIndustries } = Astro.props;
 ---
 <section class="block industries" id="industries">
   <div class="container">

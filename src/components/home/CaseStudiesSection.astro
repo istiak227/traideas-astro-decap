@@ -1,11 +1,18 @@
 ---
 import SectionHeader from "../common/SectionHeader.astro";
 import { getCaseStudies } from "../../lib/content.js";
+const {
+  section = {
+    eyebrow: "Selected work",
+    title: 'Shipped systems, <span class="serif-italic">real users.</span>',
+    description: "A sample of recent engagements across healthcare, public sector, energy, and commerce. Each project is backed by measurable outcomes."
+  }
+} = Astro.props;
 const caseStudies = await getCaseStudies();
 ---
 <section class="block" id="case-studies">
   <div class="container">
-    <SectionHeader eyebrow="Selected work" title={'Shipped systems, <span class="serif-italic">real users.</span>'} description="A sample of recent engagements across healthcare, public sector, energy, and commerce. Each project is backed by measurable outcomes." />
+    <SectionHeader eyebrow={section.eyebrow} title={section.title} description={section.description} />
   </div>
   <div class="container cs-slider-wrap" data-case-slider>
     <div class="cs-track" data-case-track>

@@ -11,37 +11,37 @@ import AskAI from "../components/home/AskAI.astro";
 import TechIcon from "../components/home/TechIcon.astro";
 import BlogCard from "../components/common/BlogCard.astro";
 import SectionHeader from "../components/common/SectionHeader.astro";
-import { clients, whyTraideas, techStack } from "../data/homeData.js";
-import { getBlogPosts } from "../lib/content.js";
+import { getBlogPosts, getHomePageData, getServices } from "../lib/content.js";
+const [homePage, services] = await Promise.all([getHomePageData(), getServices()]);
 const latestBlogPosts = (await getBlogPosts()).slice(0, 3);
 ---
-<MainLayout>
-  <Hero />
+<MainLayout title={homePage.seo?.title} description={homePage.seo?.description} image={homePage.seo?.image}>
+  <Hero hero={homePage.hero} />
   <section class="clients">
-    <div class="container"><div class="clients-head reveal"><p>{clients.eyebrow}</p><div class="serif-italic">{clients.title}</div></div></div>
-    <div class="marquee"><div class="marquee-track">{[...clients.logos, ...clients.logos].map((src) => <img src={src} alt="" loading="lazy" />)}</div></div>
+    <div class="container"><div class="clients-head reveal"><p>{homePage.clients.eyebrow}</p><div class="serif-italic">{homePage.clients.title}</div></div></div>
+    <div class="marquee"><div class="marquee-track">{[...homePage.clients.logos, ...homePage.clients.logos].map((src) => <img src={src} alt="" loading="lazy" />)}</div></div>
   </section>
-  <ServicesSection />
-  <IndustriesSection />
-  <CaseStudiesSection />
+  <ServicesSection services={services} section={homePage.servicesSection} />
+  <IndustriesSection industries={homePage.industries} />
+  <CaseStudiesSection section={homePage.caseStudiesSection} />
   <section class="block why">
     <div class="container">
-      <SectionHeader eyebrow={whyTraideas.eyebrow} title={'Why organizations <span class="serif-italic">choose us.</span>'} description={whyTraideas.description} />
-      <div class="why-grid">{whyTraideas.items.map((w, i) => <div class="why-card reveal" style={`--delay:${i * 0.06}s`}><div class="w-num">{w.n}</div><h4>{w.t}</h4><p>{w.d}</p></div>)}</div>
+      <SectionHeader eyebrow={homePage.whyTraideas.eyebrow} title={homePage.whyTraideas.title.includes("<") ? homePage.whyTraideas.title : 'Why organizations <span class="serif-italic">choose us.</span>'} description={homePage.whyTraideas.description} />
+      <div class="why-grid">{homePage.whyTraideas.items.map((w, i) => <div class="why-card reveal" style={`--delay:${i * 0.06}s`}><div class="w-num">{w.n}</div><h4>{w.t}</h4><p>{w.d}</p></div>)}</div>
     </div>
   </section>
   <section class="block">
     <div class="container">
-      <SectionHeader eyebrow={techStack.eyebrow} title={'The stack we <span class="serif-italic">live in.</span>'} description={techStack.description} />
-      <div class="tech-grid">{techStack.items.map((t, i) => <div class="tech-card reveal" style={`--delay:${i * 0.04}s`}><div class="t-ico"><TechIcon name={t.name} /></div><div><div class="t-name">{t.name}</div><div class="t-desc">{t.desc}</div></div></div>)}</div>
+      <SectionHeader eyebrow={homePage.techStack.eyebrow} title={homePage.techStack.title.includes("<") ? homePage.techStack.title : 'The stack we <span class="serif-italic">live in.</span>'} description={homePage.techStack.description} />
+      <div class="tech-grid">{homePage.techStack.items.map((t, i) => <div class="tech-card reveal" style={`--delay:${i * 0.04}s`}><div class="t-ico"><TechIcon name={t.name} /></div><div><div class="t-name">{t.name}</div><div class="t-desc">{t.desc}</div></div></div>)}</div>
     </div>
   </section>
-  <CTASection />
-  <CultureSection />
-  <CareersSection />
+  <CTASection cta={homePage.cta} />
+  <CultureSection culture={homePage.culture} />
+  <CareersSection section={homePage.careersSection} />
   <section class="block" id="blog">
     <div class="container">
-      <SectionHeader eyebrow="Latest insights" title={'From the <span class="serif-italic">engineering desk.</span>'} action={{ label: "All posts", href: "/insights" }} />
+      <SectionHeader eyebrow={homePage.blogSection.eyebrow} title={homePage.blogSection.title} action={homePage.blogSection.action} />
       <div class="blog-grid">{latestBlogPosts.map((p, i) => <BlogCard post={p} delay={`${i * 0.08}s`} />)}</div>
     </div>
   </section>
