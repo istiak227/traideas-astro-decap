@@ -16,7 +16,7 @@ Then open:
 http://localhost:4321/admin/
 ```
 
-Local Decap editing uses `local_backend: true` and `decap-server`, so you do not need GitHub login for local content changes. Entries are written to local Markdown files and uploaded images are written to `public/uploads/`.
+Local Decap editing uses `local_backend: true` and `decap-server`, so you do not need GitHub login for local content changes. Entries are written to local Markdown files and uploaded images are written to `public/assets/images/`.
 
 ## Production workflow
 
@@ -38,3 +38,7 @@ Production editors will need GitHub/OAuth access to the repo.
 - Resources: `src/content/resources/`
 - Moments media entries with tags: `src/content/moments/`
 - Page settings: `src/content/pages/`
+
+## Media library
+
+Decap uses `public/assets/images/` as the shared media folder, so editors can choose existing site images or upload new images into the same asset library. Public image paths are saved as `/assets/images/...`.

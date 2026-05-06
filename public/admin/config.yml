@@ -7,8 +7,8 @@ backend:
   squash_merges: true
 
 publish_mode: editorial_workflow
-media_folder: public/uploads
-public_folder: /uploads
+media_folder: public/assets/images
+public_folder: /assets/images
 
 site_url: http://localhost:4321/
 display_url: http://localhost:4321/
