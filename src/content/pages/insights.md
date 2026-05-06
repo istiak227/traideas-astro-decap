@@ -14,9 +14,9 @@ hero:
     label: "Browse Resources"
     href: "#resources"
   images: 
-    - src: "/assets/images/culture/culture-04.jpg"
+    - src: "/assets/images/culture-04.jpg"
       alt: "Engineering work session"
-    - src: "/assets/images/culture/culture-07.jpg"
+    - src: "/assets/images/culture-07.jpg"
       alt: "Design review"
 categories: 
   - key: "blog"

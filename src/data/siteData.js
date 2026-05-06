@@ -13,7 +13,7 @@ export const siteData = {
     {
       title: "Narayanganj Office",
       address: "6/2, S. S Alam Khandaker Road, Masdair, Narayanganj-1400.",
-      image: "/assets/images/others/narayanganj.webp",
+      image: "/assets/images/narayanganj.webp",
       tag: "Headquarter",
       mapUrl:
         "https://www.google.com/maps/search/?api=1&query=Traideas+Narayanganj",
@@ -21,7 +21,7 @@ export const siteData = {
     {
       title: "Dhaka Office",
       address: "383, Razzak Plaza, Moghbazar, Dhaka-1217.",
-      image: "/assets/images/others/dhaka.webp",
+      image: "/assets/images/dhaka.webp",
       tag: "Corporate Office",
       mapUrl:
         "https://www.google.com/maps/search/?api=1&query=Razzak+Plaza+Moghbazar+Dhaka",

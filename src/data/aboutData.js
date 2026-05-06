@@ -4,7 +4,7 @@ export const aboutData = {
     title: "Where Ideas Become Working Systems.",
     subtitle:
       "We help organizations transform complex workflows into scalable digital systems — enabling governments, enterprises, and innovators to operate smarter.",
-    image: "/assets/images/culture/culture-01.webp",
+    image: "/assets/images/culture-01.webp",
     meta: [
       { label: "Founded", value: "2021" },
       { label: "Team size", value: "25+ engineers" },
@@ -14,7 +14,7 @@ export const aboutData = {
   story: {
     eyebrow: "Our story",
     title: "From an idea to a working system.",
-    image: "/assets/images/culture/culture-04.webp",
+    image: "/assets/images/culture-04.webp",
     paragraphs: [
       "Traideas began its journey in 2021 with a vision to make technology more practical, scalable, and meaningful for organizations solving real-world challenges.",
       "The name Traideas was formed by merging two words — Trade and Ideas — representing our belief that innovation becomes powerful when ideas are transformed into working systems.",
@@ -40,7 +40,7 @@ export const aboutData = {
   ],
   award: {
     title: "Recognized for Public Service Innovation.",
-    image: "/assets/images/others/award.webp",
+    image: "/assets/images/award.webp",
     paragraphs: [
       "Traideas received the Best Public Service Innovation Award for developing the Consumer Complaint Management System (CCMS) for the Directorate of National Consumer Rights Protection under the Ministry of Commerce.",
       "The platform transformed how consumer complaints are submitted, tracked, and resolved nationwide — improving transparency and accessibility for citizens.",

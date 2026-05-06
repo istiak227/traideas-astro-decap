@@ -48,9 +48,9 @@ Decap uses one global media root so editors can browse the full site image libra
 
 Recommended organization inside that folder:
 
-- `public/assets/images/clients/`
-- `public/assets/images/team/`
-- `public/assets/images/culture/`
+- `public/assets/images/`
+- `public/assets/images/`
+- `public/assets/images/`
 - `public/assets/images/blogs/`
 - `public/assets/images/case-studies/`
 - `public/assets/images/services/`

@@ -1,6 +1,6 @@
 ---
 kind: "image"
-image: "/assets/images/culture/culture-06.jpg"
+image: "/assets/images/culture-06.jpg"
 category: "UI fragment"
 title: "Complaint triage workflow"
 href: "#"

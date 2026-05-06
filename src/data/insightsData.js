@@ -13,7 +13,7 @@ export const insights = [
     read: "8 min read",
     title: "Why agentic workflows are quietly replacing RPA",
     excerpt: "The hidden cost of legacy automation — and how LLM-mediated agents change the economics of back-office work.",
-    image: "/assets/images/culture/culture-04.jpg",
+    image: "/assets/images/culture-04.jpg",
     body: [
       "Legacy automation helped teams move faster, but it often struggles when the work includes exceptions, messy documents, and judgment calls.",
       "Agentic workflows change the economics by combining language reasoning with tools, guardrails, and human review where needed.",
@@ -28,7 +28,7 @@ export const insights = [
     read: "12 min read",
     title: "Shipping EMR systems under DGDA compliance",
     excerpt: "What we learned delivering a national-scale electronic medical record system across 40+ facilities.",
-    image: "/assets/images/culture/culture-02.jpg",
+    image: "/assets/images/culture-02.jpg",
     body: ["Healthcare platforms need careful access control, audit trails, resilient integrations, and user flows that match clinical reality."]
   },
   {
@@ -39,7 +39,7 @@ export const insights = [
     read: "6 min read",
     title: "The modernization trap: when not to replatform",
     excerpt: "Sometimes the legacy system is fine. Three diagnostics we run before recommending a rebuild.",
-    image: "/assets/images/culture/culture-03.jpg",
+    image: "/assets/images/culture-03.jpg",
     body: ["Modernization should start with operational evidence, not a preference for new technology."]
   },
   { type: "quick", title: "The fastest digital transformation wins usually come from retiring duplicate spreadsheets.", excerpt: "Look for shadow systems before you buy a new platform.", date: "Apr 12, 2026" },

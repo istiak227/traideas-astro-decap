@@ -4,7 +4,7 @@ export const careersData = {
     title: "Build the Future With Traideas.",
     subtitle:
       "Join a team where engineers solve real-world national and international problems through scalable software, AI-driven systems, and digital transformation platforms.",
-    image: "/assets/images/culture/culture-01.webp",
+    image: "/assets/images/culture-01.webp",
     meta: [
       { label: "Open roles", value: "1 active" },
       { label: "Team size", value: "25+ engineers" },
@@ -42,22 +42,22 @@ export const careersData = {
   ],
   lifeImages: [
     {
-      src: "/assets/images/culture/culture-10.webp",
+      src: "/assets/images/culture-10.webp",
       alt: "Team at work",
       cls: "t1",
     },
     {
-      src: "/assets/images/culture/culture-03.webp",
+      src: "/assets/images/culture-03.webp",
       alt: "Team event",
       cls: "t2",
     },
     {
-      src: "/assets/images/culture/culture-04.webp",
+      src: "/assets/images/culture-04.webp",
       alt: "Workshop",
       cls: "t3",
     },
     {
-      src: "/assets/images/culture/culture-05.webp",
+      src: "/assets/images/culture-05.webp",
       alt: "Office",
       cls: "t4",
     },

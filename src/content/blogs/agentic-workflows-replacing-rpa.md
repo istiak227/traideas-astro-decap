@@ -5,7 +5,7 @@ cat: AI Strategy
 date: Apr 18, 2026
 read: 8 min read
 excerpt: The hidden cost of legacy automation — and how LLM-mediated agents change the economics of back-office work.
-image: /assets/images/culture/culture-04.jpg
+image: /assets/images/culture-04.jpg
 slug: agentic-workflows-replacing-rpa
 ---
 
