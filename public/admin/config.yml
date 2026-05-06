@@ -2,7 +2,7 @@ local_backend: true
 
 backend:
   name: github
-  repo: traideas/traideas-website-astro
+  repo: istiak227/traideas-astro-decap
   branch: main
   squash_merges: true
 
@@ -10,8 +10,8 @@ publish_mode: editorial_workflow
 media_folder: public/uploads
 public_folder: /uploads
 
-site_url: https://traideas.com
-display_url: https://traideas.com
+site_url: http://localhost:4321/
+display_url: http://localhost:4321/
 logo_url: /assets/images/logo.png
 
 collections:
