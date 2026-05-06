@@ -1,8 +1,9 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
-import { careersData } from "../data/careersData.js";
-import { seoData } from "../data/seoData.js";
-import Icon from "../components/common/Icon.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import { getCareersPageData } from "../../lib/content.js";
+import { seoData } from "../../data/seoData.js";
+import Icon from "../../components/common/Icon.astro";
+const careersData = await getCareersPageData();
 ---
 <MainLayout title={seoData.pages.careers.title} description={seoData.pages.careers.description}>
   <section class="careers-hero"><div class="ch-bg-grid"></div><div class="ch-blob"></div><div class="container ch-grid"><div class="ch-left reveal in"><div class="eyebrow">{careersData.hero.eyebrow}</div><h1 class="h-display ch-h1">Build the Future<br />With <span class="serif-italic">Traideas.</span></h1><p class="lead ch-sub">{careersData.hero.subtitle}</p><div class="ch-ctas"><a href="#openings" class="btn btn-primary btn-arrow">View Open Positions</a><a href="mailto:hr@traideas.com" class="btn btn-ghost">Send Resume <Icon name="ArrowUpRight" size={13} /></a></div><div class="ch-meta">{careersData.hero.meta.map((m) => <div class="ch-meta-item"><div class="lbl">{m.label}</div><div class="val">{m.value}</div></div>)}</div></div><div class="ch-right reveal in"><div class="ch-img-wrap"><img src={careersData.hero.image} alt="Life at Traideas" /><span class="ch-img-tag">We're hiring</span></div></div></div></section>

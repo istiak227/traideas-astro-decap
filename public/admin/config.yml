@@ -1,0 +1,252 @@
+local_backend: true
+
+backend:
+  name: github
+  repo: traideas/traideas-website-astro
+  branch: main
+  squash_merges: true
+
+publish_mode: editorial_workflow
+media_folder: public/uploads
+public_folder: /uploads
+
+site_url: https://traideas.com
+display_url: https://traideas.com
+logo_url: /assets/images/logo.png
+
+collections:
+  - name: case-studies
+    label: Case Studies
+    label_singular: Case Study
+    folder: src/content/case-studies
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    summary: "{{title}} · {{industry}}"
+    sortable_fields: [order, title, industry]
+    fields:
+      - { label: Order, name: order, widget: number, value_type: int, default: 999 }
+      - { label: Title, name: title, widget: string }
+      - { label: Short Title, name: shortTitle, widget: string }
+      - { label: Client, name: client, widget: string }
+      - { label: Client Short, name: clientShort, widget: string }
+      - { label: Industry, name: industry, widget: select, options: [Government, Healthcare, Education, Energy, NGO, Enterprise] }
+      - { label: Location, name: location, widget: string }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Summary, name: summary, widget: text }
+      - { label: Overview, name: overview, widget: text }
+      - { label: Duration, name: duration, widget: string, required: false }
+      - { label: Tech Stack, name: techStack, widget: list, field: { label: Technology, name: technology, widget: string } }
+      - { label: Service Components, name: serviceComponents, widget: list, field: { label: Component, name: component, widget: string } }
+      - { label: Challenges, name: challenge, widget: list, field: { label: Challenge, name: challengeItem, widget: string } }
+      - { label: Solutions, name: solution, widget: list, field: { label: Solution, name: solutionItem, widget: string } }
+      - { label: Screenshots, name: screenshots, widget: list, required: false, field: { label: Screenshot label, name: screenshot, widget: string } }
+      - { label: Impact Points, name: impactPoints, widget: list, required: false, field: { label: Point, name: point, widget: string } }
+      - label: Impact Stats
+        name: impactStats
+        widget: list
+        required: false
+        fields:
+          - { label: Value, name: v, widget: string }
+          - { label: Suffix, name: s, widget: string, required: false }
+          - { label: Title, name: t, widget: string }
+          - { label: Description, name: d, widget: text }
+      - label: CTA
+        name: cta
+        widget: object
+        fields:
+          - { label: Label, name: label, widget: string, default: Discuss a Similar Project }
+          - { label: Link, name: href, widget: string, default: /contact }
+      - { label: Color Tint, name: colorTint, widget: color, default: "#e6e8f3" }
+      - { label: Accent Color, name: accentColor, widget: color, default: "#8D99CE" }
+
+  - name: blogs
+    label: Insights · Blog
+    label_singular: Blog Post
+    folder: src/content/blogs
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    summary: "{{title}} · {{date}}"
+    sortable_fields: [order, title, date, cat]
+    fields:
+      - { label: Order, name: order, widget: number, value_type: int, default: 999 }
+      - { label: Title, name: title, widget: string }
+      - { label: Category, name: cat, widget: string }
+      - { label: Date Label, name: date, widget: string, hint: "Example: Apr 18, 2026" }
+      - { label: Read Time, name: read, widget: string, required: false }
+      - { label: Excerpt, name: excerpt, widget: text }
+      - { label: Featured Image, name: image, widget: image }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: quick-bites
+    label: Insights · Quick Bites
+    label_singular: Quick Bite
+    folder: src/content/quick-bites
+    create: true
+    slug: "{{fields.order}}-{{slug}}"
+    extension: md
+    format: frontmatter
+    summary: "{{title}} · {{kind}}"
+    sortable_fields: [order, title, kind, category]
+    fields:
+      - { label: Order, name: order, widget: number, value_type: int, default: 999 }
+      - { label: Type, name: kind, widget: select, options: [image, text, code] }
+      - { label: Category, name: category, widget: string }
+      - { label: Title, name: title, widget: string }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Pinned, name: pinned, widget: boolean, default: false, required: false }
+      - { label: Body, name: body, widget: text, required: false }
+      - { label: Meta, name: meta, widget: string, required: false }
+      - { label: Code, name: code, widget: code, required: false }
+      - { label: Link, name: href, widget: string, default: "#" }
+
+  - name: resources
+    label: Insights · Resources
+    label_singular: Resource
+    folder: src/content/resources
+    create: true
+    slug: "{{fields.order}}-{{slug}}"
+    extension: md
+    format: frontmatter
+    summary: "{{title}}"
+    sortable_fields: [order, title, icon]
+    fields:
+      - { label: Order, name: order, widget: number, value_type: int, default: 999 }
+      - { label: Icon, name: icon, widget: select, options: [Roadmap, Architecture, Government, Checklist, Doc, Procurement, Integration, API] }
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text }
+      - label: Tags
+        name: tags
+        widget: list
+        fields:
+          - { label: Style, name: style, widget: select, options: [t-framework, t-internal, t-toolkit, t-pdf, t-external, t-guide] }
+          - { label: Label, name: label, widget: string }
+      - { label: Meta, name: meta, widget: list, field: { label: Meta item, name: item, widget: string } }
+      - { label: Link, name: href, widget: string, default: "#" }
+
+  - name: careers
+    label: Careers · Open Positions
+    label_singular: Open Position
+    folder: src/content/careers
+    create: true
+    slug: "{{fields.order}}-{{slug}}"
+    extension: md
+    format: frontmatter
+    summary: "{{role}} · {{type}}"
+    sortable_fields: [order, role, type, active]
+    fields:
+      - { label: Order, name: order, widget: number, value_type: int, default: 999 }
+      - { label: Active, name: active, widget: boolean, default: true }
+      - { label: Role, name: role, widget: string }
+      - { label: Location, name: loc, widget: string }
+      - { label: Type, name: type, widget: string }
+      - { label: Tags, name: tags, widget: list, field: { label: Tag, name: tag, widget: string } }
+      - { label: Apply URL, name: applyUrl, widget: string }
+      - { label: Skills, name: skills, widget: list, field: { label: Skill, name: skill, widget: string } }
+      - { label: Benefits, name: benefits, widget: list, field: { label: Benefit, name: benefit, widget: string } }
+      - { label: Detail, name: detail, widget: text, required: false }
+
+  - name: moments
+    label: Traideas · Moments
+    label_singular: Moment
+    folder: src/content/moments
+    create: true
+    slug: "{{fields.order}}-{{slug}}"
+    extension: md
+    format: frontmatter
+    summary: "{{title}} · {{tags}}"
+    sortable_fields: [order, title, type]
+    fields:
+      - { label: Order, name: order, widget: number, value_type: int, default: 999 }
+      - { label: Title, name: title, widget: string }
+      - { label: Media, name: src, widget: image }
+      - { label: Type, name: type, widget: select, options: [image, video], default: image }
+      - { label: Tags, name: tags, widget: list, field: { label: Tag, name: tag, widget: string } }
+      - { label: Display Size, name: size, widget: select, options: [s-large, s-tall, s-small, s-wide], default: s-small }
+      - { label: Poster, name: poster, widget: image, required: false }
+      - { label: Controls, name: controls, widget: boolean, required: false, default: true }
+
+  - name: site-pages
+    label: Page Settings
+    files:
+      - label: Moments Page
+        name: moments-page
+        file: src/content/pages/moments.md
+        fields:
+          - label: Hero
+            name: hero
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Accent, name: accent, widget: string }
+              - { label: Subtitle, name: subtitle, widget: text }
+              - label: Primary CTA
+                name: primaryCta
+                widget: object
+                fields: [{ label: Label, name: label, widget: string }, { label: Link, name: href, widget: string }]
+              - label: Secondary CTA
+                name: secondaryCta
+                widget: object
+                fields: [{ label: Label, name: label, widget: string }, { label: Link, name: href, widget: string }]
+              - label: Meta
+                name: meta
+                widget: list
+                fields: [{ label: Label, name: label, widget: string }, { label: Value, name: value, widget: string }]
+              - label: Collage
+                name: collage
+                widget: list
+                fields: [{ label: Image, name: src, widget: image }, { label: Alt, name: alt, widget: string }, { label: CSS Class, name: cls, widget: string }]
+              - { label: Chips, name: chips, widget: list, field: { label: Chip, name: chip, widget: string } }
+          - label: Gallery Intro
+            name: galleryIntro
+            widget: object
+            fields: [{ label: Eyebrow, name: eyebrow, widget: string }, { label: Title, name: title, widget: string }, { label: Accent, name: accent, widget: string }, { label: Description, name: description, widget: text }]
+          - label: CTA
+            name: cta
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Accent, name: accent, widget: string }
+              - { label: Description, name: description, widget: text }
+              - label: Primary
+                name: primary
+                widget: object
+                fields: [{ label: Label, name: label, widget: string }, { label: Link, name: href, widget: string }]
+              - label: Secondary
+                name: secondary
+                widget: object
+                fields: [{ label: Label, name: label, widget: string }, { label: Link, name: href, widget: string }]
+              - { label: Tagline, name: tagline, widget: string }
+      - label: Careers Page
+        name: careers
+        file: src/content/pages/careers.md
+        fields:
+          - label: Hero
+            name: hero
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Subtitle, name: subtitle, widget: text }
+              - { label: Image, name: image, widget: image }
+              - label: Meta
+                name: meta
+                widget: list
+                fields: [{ label: Label, name: label, widget: string }, { label: Value, name: value, widget: string }]
+          - label: Reasons
+            name: reasons
+            widget: list
+            fields: [{ label: Number, name: n, widget: string }, { label: Title, name: t, widget: string }, { label: Description, name: d, widget: text }]
+          - label: Values
+            name: values
+            widget: list
+            fields: [{ label: Label, name: label, widget: string }, { label: Icon, name: icon, widget: string }]
+          - label: Life Images
+            name: lifeImages
+            widget: list
+            fields: [{ label: Image, name: src, widget: image }, { label: Alt, name: alt, widget: string }, { label: CSS Class, name: cls, widget: string }]

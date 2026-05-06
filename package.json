@@ -4,12 +4,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
-    "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
-    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview"
+    "dev": "astro dev",
+    "cms": "decap-server",
+    "dev:cms": "concurrently \"astro dev\" \"decap-server\"",
+    "build": "astro build",
+    "preview": "astro preview"
   },
   "dependencies": {
     "astro": "^5.7.10"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "decap-server": "^3.7.0"
+  }
 }

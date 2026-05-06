@@ -1,0 +1,16 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import BlogCard from "../../components/common/BlogCard.astro";
+import SectionHeader from "../../components/common/SectionHeader.astro";
+import { getBlogPosts } from "../../lib/content.js";
+
+const posts = await getBlogPosts();
+---
+<MainLayout title="Blog | Traideas" description="Articles from the Traideas engineering desk.">
+  <section class="block" id="blog">
+    <div class="container">
+      <SectionHeader eyebrow="Blog" title={'From the <span class="serif-italic">engineering desk.</span>'} description="Long-form articles on engineering, AI, and digital transformation." />
+      <div class="blog-grid">{posts.map((post, i) => <BlogCard post={{ ...post, href: `/blog/${post.slug}` }} delay={`${(i % 3) * 0.06}s`} />)}</div>
+    </div>
+  </section>
+</MainLayout>

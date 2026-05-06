@@ -1,8 +1,9 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import { momentsData } from "../data/momentsData.js";
+import { getMomentsData } from "../lib/content.js";
 import Icon from "../components/common/Icon.astro";
 
+const momentsData = await getMomentsData();
 const { hero, galleryIntro, gallery, cta } = momentsData;
 ---
 

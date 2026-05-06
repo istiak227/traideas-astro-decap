@@ -12,7 +12,8 @@ import TechIcon from "../components/home/TechIcon.astro";
 import BlogCard from "../components/common/BlogCard.astro";
 import SectionHeader from "../components/common/SectionHeader.astro";
 import { clients, whyTraideas, techStack } from "../data/homeData.js";
-import { latestBlogPosts } from "../data/insightsData.js";
+import { getBlogPosts } from "../lib/content.js";
+const latestBlogPosts = (await getBlogPosts()).slice(0, 3);
 ---
 <MainLayout>
   <Hero />

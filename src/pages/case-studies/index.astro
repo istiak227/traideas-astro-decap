@@ -1,8 +1,9 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
 import Icon from "../../components/common/Icon.astro";
-import { caseStudies, industries } from "../../data/caseStudiesData.js";
+import { getCaseStudies, getIndustries } from "../../lib/content.js";
 import { seoData } from "../../data/seoData.js";
+const [caseStudies, industries] = await Promise.all([getCaseStudies(), getIndustries()]);
 const ctaDots = Array.from({ length: 40 }, (_, i) => ({
   x: 50 + (i % 10) * 34,
   y: 40 + Math.floor(i / 10) * 55,

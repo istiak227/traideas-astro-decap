@@ -1,6 +1,7 @@
 ---
 import SectionHeader from "../common/SectionHeader.astro";
-import { caseStudies } from "../../data/caseStudiesData.js";
+import { getCaseStudies } from "../../lib/content.js";
+const caseStudies = await getCaseStudies();
 ---
 <section class="block" id="case-studies">
   <div class="container">

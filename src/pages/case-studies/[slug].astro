@@ -1,7 +1,8 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
-import { caseStudies } from "../../data/caseStudiesData.js";
-export function getStaticPaths() {
+import { getCaseStudies } from "../../lib/content.js";
+export async function getStaticPaths() {
+  const caseStudies = await getCaseStudies();
   return caseStudies.map((cs) => ({ params: { slug: cs.slug }, props: { cs } }));
 }
 const { cs } = Astro.props;
