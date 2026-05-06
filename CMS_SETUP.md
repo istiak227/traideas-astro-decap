@@ -41,4 +41,19 @@ Production editors will need GitHub/OAuth access to the repo.
 
 ## Media library
 
-Decap uses `public/assets/images/` as the shared media folder, so editors can choose existing site images or upload new images into the same asset library. Public image paths are saved as `/assets/images/...`.
+Decap uses one global media root so editors can browse the full site image library:
+
+- Repository folder: `public/assets/images/`
+- Public URL prefix: `/assets/images`
+
+Recommended organization inside that folder:
+
+- `public/assets/images/clients/`
+- `public/assets/images/team/`
+- `public/assets/images/culture/`
+- `public/assets/images/blogs/`
+- `public/assets/images/case-studies/`
+- `public/assets/images/services/`
+- `public/assets/images/cms/` for general CMS uploads
+
+Do not set per-field `media_folder` unless you intentionally want that image picker to focus on one folder. Keeping one global root is the safest way to see existing images now and makes it easier to migrate later to a hosted image library/CDN because content paths consistently start with `/assets/images/...`.

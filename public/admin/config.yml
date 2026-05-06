@@ -14,6 +14,12 @@ site_url: http://localhost:4321/
 display_url: http://localhost:4321/
 logo_url: /assets/images/logo.png
 
+# Keep one global asset root so editors can browse existing site images.
+# New uploads can be organized manually in subfolders from the media library UI when supported.
+media_library:
+  config:
+    multiple: true
+
 collections:
   - name: case-studies
     label: Case Studies
