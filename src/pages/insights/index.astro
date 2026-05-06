@@ -3,6 +3,7 @@ import MainLayout from "../../layouts/MainLayout.astro";
 import Icon from "../../components/common/Icon.astro";
 import BlogCard from "../../components/common/BlogCard.astro";
 import { getBlogPosts, getInsightsPageData, getQuickBites, getResources } from "../../lib/content.js";
+import OptimizedImage from "../../components/common/OptimizedImage.astro";
 
 const [blog, quickBits, resources, page] = await Promise.all([getBlogPosts(), getQuickBites(), getResources(), getInsightsPageData()]);
 const insightCategories = page.categories;
@@ -70,10 +71,10 @@ const resourceIcons = {
       <div class="ih-right reveal in" style="--delay:.15s">
         <div class="ih-collage">
           <div class="ih-tile t-1">
-            <img src={page.hero.images[0].src} alt={page.hero.images[0].alt} />
+            <OptimizedImage src={page.hero.images[0].src} alt={page.hero.images[0].alt} width={700} height={520} loading="eager" />
           </div>
           <div class="ih-tile t-2">
-            <img src={page.hero.images[1].src} alt={page.hero.images[1].alt} />
+            <OptimizedImage src={page.hero.images[1].src} alt={page.hero.images[1].alt} width={700} height={520} loading="lazy" />
           </div>
           <div class="ih-card">
             <div class="ih-card-eb">Featured · 8 min read</div>
@@ -153,7 +154,7 @@ const resourceIcons = {
                 </svg>
               </span>
             )}
-            <img src={b.image} alt={b.title} loading="lazy" />
+            <OptimizedImage src={b.image} alt={b.title} width={720} height={720} loading="lazy" />
             <div class="qb-overlay">
               <div class="qb-overlay-eb">{b.category}</div>
               <h4 class="qb-overlay-t">{b.title}</h4>

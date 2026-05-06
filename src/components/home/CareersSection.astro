@@ -1,4 +1,6 @@
 ---
+import OptimizedImage from "../common/OptimizedImage.astro";
+
 const {
   section = {
     eyebrow: "Careers",
@@ -28,6 +30,6 @@ const {
   </div>
   <div class="open-roles">
     <div class="open-role-title">{section.cardTitle}</div>
-    <div class="open-role-image"><img src={section.image} alt={section.imageAlt} loading="lazy" /></div>
+    <div class="open-role-image"><OptimizedImage src={section.image} alt={section.imageAlt} width={720} height={520} loading="lazy" /></div>
   </div>
 </section>

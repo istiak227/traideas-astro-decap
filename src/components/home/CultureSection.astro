@@ -1,6 +1,8 @@
 ---
 import SectionHeader from "../common/SectionHeader.astro";
 import { culture as fallbackCulture } from "../../data/homeData.js";
+import OptimizedImage from "../common/OptimizedImage.astro";
+
 const { culture = fallbackCulture } = Astro.props;
 ---
 <section class="block">
@@ -8,7 +10,7 @@ const { culture = fallbackCulture } = Astro.props;
     <SectionHeader eyebrow={culture.eyebrow} title={culture.title.includes("<") ? culture.title : `${culture.title.replace("warm team.", "")}<span class="serif-italic">warm team.</span>`} description={culture.description} />
     <div class="culture-gallery reveal">
       {culture.images.map((image) => (
-        <div class={`g-item ${image.cls}`}><img src={image.src} alt={image.alt} loading="lazy" decoding="async" width="640" height="480" /><div class="g-tag">{image.tag}</div></div>
+        <div class={`g-item ${image.cls}`}><OptimizedImage src={image.src} alt={image.alt} loading="lazy" decoding="async" width={640} height={480} /><div class="g-tag">{image.tag}</div></div>
       ))}
     </div>
   </div>

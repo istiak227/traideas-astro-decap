@@ -1,5 +1,6 @@
 ---
 import Icon from "../common/Icon.astro";
+import OptimizedImage from "../common/OptimizedImage.astro";
 
 const prompt = "Tell me about Traideas and what services they provide.";
 const encodedPrompt = encodeURIComponent(prompt);
@@ -52,7 +53,7 @@ const targets = [
       {targets.map((target) => (
         <a class="ai-target" href={`${target.url}${encodedPrompt}`} target="_blank" rel="noreferrer">
           <div class="ai-ico">
-            <img src={target.image} alt="" loading="lazy" />
+            <OptimizedImage src={target.image} alt="" width={64} height={64} loading="lazy" />
           </div>
           <div class="ai-name">{target.name}</div>
         </a>

@@ -12,6 +12,8 @@ import TechIcon from "../components/home/TechIcon.astro";
 import BlogCard from "../components/common/BlogCard.astro";
 import SectionHeader from "../components/common/SectionHeader.astro";
 import { getBlogPosts, getHomePageData, getServices } from "../lib/content.js";
+import OptimizedImage from "../components/common/OptimizedImage.astro";
+
 const [homePage, services] = await Promise.all([getHomePageData(), getServices()]);
 const latestBlogPosts = (await getBlogPosts()).slice(0, 3);
 ---
@@ -19,7 +21,7 @@ const latestBlogPosts = (await getBlogPosts()).slice(0, 3);
   <Hero hero={homePage.hero} />
   <section class="clients">
     <div class="container"><div class="clients-head reveal"><p>{homePage.clients.eyebrow}</p><div class="serif-italic">{homePage.clients.title}</div></div></div>
-    <div class="marquee"><div class="marquee-track">{[...homePage.clients.logos, ...homePage.clients.logos].map((src) => <img src={src} alt="" loading="lazy" />)}</div></div>
+    <div class="marquee"><div class="marquee-track">{[...homePage.clients.logos, ...homePage.clients.logos].map((src) => <OptimizedImage src={src} alt="" width={180} height={90} loading="lazy" />)}</div></div>
   </section>
   <ServicesSection services={services} section={homePage.servicesSection} />
   <IndustriesSection industries={homePage.industries} />

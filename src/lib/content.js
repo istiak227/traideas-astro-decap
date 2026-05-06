@@ -3,6 +3,8 @@ import { getCollection } from "astro:content";
 const byOrder = (a, b) => (a.data.order ?? 999) - (b.data.order ?? 999);
 
 const withSlug = (entry) => ({ slug: entry.slug, ...entry.data });
+const codeManagedCaseStudyTints = ["#e6e8f3", "#e8efe5", "#faf0e4", "#e0f0f8", "#ede4f8", "#faf5e0"];
+const codeManagedMomentSizes = ["s-large", "s-tall", "s-tall", "s-small", "s-wide", "s-small"];
 const servicePageIds = [
   "service-digital-transformation",
   "service-mvp-development",
@@ -10,15 +12,43 @@ const servicePageIds = [
   "service-consulting",
 ];
 
+function deepMerge(base = {}, overrides = {}) {
+  const merged = { ...base };
+
+  for (const [key, value] of Object.entries(overrides)) {
+    if (value === undefined || value === null) continue;
+
+    if (Array.isArray(value)) {
+      merged[key] = value;
+      continue;
+    }
+
+    if (typeof value === "object" && !Array.isArray(value)) {
+      merged[key] = deepMerge(base[key], value);
+      continue;
+    }
+
+    merged[key] = value;
+  }
+
+  return merged;
+}
+
+function findEntry(entries, pageId) {
+  return entries.find((item) => [item.id, item.slug, item.id?.replace(/\.md$/, "")].includes(pageId));
+}
+
 export async function getPageSettings(pageId) {
-  const entries = await getCollection("pages");
-  const entry = entries.find((item) => [item.id, item.slug, item.id?.replace(/\.md$/, "")].includes(pageId));
-  return entry?.data ?? {};
+  const [defaults, copy] = await Promise.all([getCollection("pages"), getCollection("page-copy")]);
+  return deepMerge(findEntry(defaults, pageId)?.data ?? {}, findEntry(copy, pageId)?.data ?? {});
 }
 
 export async function getCaseStudies() {
   const entries = await getCollection("case-studies");
-  return entries.sort(byOrder).map(withSlug);
+  return entries.sort(byOrder).map((entry, index) => ({
+    ...withSlug(entry),
+    colorTint: codeManagedCaseStudyTints[index % codeManagedCaseStudyTints.length],
+  }));
 }
 
 export async function getIndustries() {
@@ -51,12 +81,13 @@ export async function getServicesPageData() {
 }
 
 export async function getServices() {
-  const entries = await getCollection("pages");
+  const [entries, copy] = await Promise.all([getCollection("pages"), getCollection("page-copy")]);
   return entries
     .filter((entry) => servicePageIds.includes(entry.id?.replace(/\.md$/, "") ?? entry.slug))
     .map((entry) => {
       const pageId = entry.id?.replace(/\.md$/, "") ?? entry.slug;
-      return { pageId, ...entry.data, slug: entry.data.slug ?? pageId.replace(/^service-/, "") };
+      const data = deepMerge(entry.data, findEntry(copy, pageId)?.data ?? {});
+      return { pageId, ...data, slug: data.slug ?? pageId.replace(/^service-/, "") };
     })
     .sort((a, b) => Number(a.num ?? 999) - Number(b.num ?? 999));
 }
@@ -83,9 +114,10 @@ export async function getContactPageData() {
 
 export async function getMomentItems() {
   const entries = await getCollection("moments");
-  return entries.sort(byOrder).map((entry) => ({
+  return entries.sort(byOrder).map((entry, index) => ({
     slug: entry.slug,
     ...entry.data,
+    size: codeManagedMomentSizes[index % codeManagedMomentSizes.length],
     tag: entry.data.tags[0] ?? entry.data.title,
   }));
 }

@@ -107,6 +107,10 @@ const pages = defineCollection({
   schema: z.object({}).passthrough(),
 });
 
+const pageCopy = defineCollection({
+  schema: z.object({}).passthrough(),
+});
+
 export const collections = {
   "case-studies": caseStudies,
   blogs,
@@ -115,4 +119,5 @@ export const collections = {
   careers,
   moments,
   pages,
+  "page-copy": pageCopy,
 };

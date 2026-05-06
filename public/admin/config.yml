@@ -14,8 +14,10 @@ site_url: http://localhost:4321/
 display_url: http://localhost:4321/
 logo_url: /assets/images/logo.png
 
-# Keep one global asset root so editors can browse existing site images.
-# New uploads can be organized manually in subfolders from the media library UI when supported.
+# Hybrid CMS approach:
+# - Collections below manage content entries and editorial workflow.
+# - Page Settings manages basic copy + SEO only.
+# - Layout, section structure, grids, animation, button styling, and responsive behavior stay in Astro code.
 
 collections:
   - name: case-studies
@@ -55,14 +57,12 @@ collections:
           - { label: Suffix, name: s, widget: string, required: false }
           - { label: Title, name: t, widget: string }
           - { label: Description, name: d, widget: text }
-      - label: CTA
+      - label: CTA Copy
         name: cta
         widget: object
         fields:
           - { label: Label, name: label, widget: string, default: Discuss a Similar Project }
           - { label: Link, name: href, widget: string, default: /contact }
-      - { label: Color Tint, name: colorTint, widget: color, default: "#e6e8f3" }
-      - { label: Accent Color, name: accentColor, widget: color, default: "#8D99CE" }
 
   - name: blogs
     label: Insights · Blog
@@ -168,27 +168,26 @@ collections:
       - { label: Media, name: src, widget: image }
       - { label: Type, name: type, widget: select, options: [image, video], default: image }
       - { label: Tags, name: tags, widget: list, field: { label: Tag, name: tag, widget: string } }
-      - { label: Display Size, name: size, widget: select, options: [s-large, s-tall, s-small, s-wide], default: s-small }
       - { label: Poster, name: poster, widget: image, required: false }
       - { label: Controls, name: controls, widget: boolean, required: false, default: true }
 
-  - name: site-pages
+  - name: page-copy
     label: Page Settings
+    description: "Edit page copy and SEO only. Layout and behavior stay in Astro code."
     files:
       - label: Home Page
         name: home
-        file: src/content/pages/home.md
+        file: src/content/page-copy/home.md
         fields:
           - &seo_field
             label: SEO
             name: seo
             widget: object
             fields:
-              - { label: Meta Title, name: title, widget: string, required: false }
-              - { label: Meta Description, name: description, widget: text, required: false }
-              - { label: Social Image, name: image, widget: image, required: false }
-          - &hero_field
-            label: Hero
+              - { label: SEO Title, name: title, widget: string, required: false }
+              - { label: SEO Description, name: description, widget: text, required: false }
+          - &hero_copy_field
+            label: Hero Copy
             name: hero
             widget: object
             fields:
@@ -196,78 +195,218 @@ collections:
               - { label: Title, name: title, widget: string }
               - { label: Accent, name: accent, widget: string, required: false }
               - { label: Subtitle, name: subtitle, widget: text, required: false }
-              - label: Primary CTA
-                name: primaryCta
-                widget: object
-                required: false
-                fields: [{ label: Label, name: label, widget: string }, { label: Link, name: href, widget: string }]
-              - label: Secondary CTA
-                name: secondaryCta
-                widget: object
-                required: false
-                fields: [{ label: Label, name: label, widget: string }, { label: Link, name: href, widget: string }]
-              - label: Stats
-                name: stats
-                widget: list
-                required: false
-                fields: [{ label: Value, name: value, widget: string, required: false }, { label: Target, name: target, widget: number, required: false }, { label: Suffix, name: suffix, widget: string, required: false }, { label: Label, name: label, widget: string }]
-              - label: Images
-                name: images
-                widget: list
-                required: false
-                fields: [{ label: Image, name: src, widget: image }, { label: Alt, name: alt, widget: string }]
-              - { label: Chips, name: chips, widget: list, required: false, field: { label: Chip, name: chip, widget: string } }
-          - label: Clients
+          - label: Clients Copy
             name: clients
             widget: object
             fields:
               - { label: Eyebrow, name: eyebrow, widget: string }
               - { label: Title, name: title, widget: string }
-              - { label: Logos, name: logos, widget: list, field: { label: Logo, name: logo, widget: image } }
-          - &section_header_field
-            label: Services Section
+          - &section_services
+            label: Services Section Copy
             name: servicesSection
             widget: object
-            fields: [{ label: Eyebrow, name: eyebrow, widget: string }, { label: Title, name: title, widget: string }, { label: Description, name: description, widget: text }]
-          - label: Industries
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+          - label: Industries Section Copy
             name: industries
             widget: object
             fields:
               - { label: Eyebrow, name: eyebrow, widget: string }
               - { label: Title, name: title, widget: string }
               - { label: Description, name: description, widget: text }
-              - label: Items
-                name: items
-                widget: list
-                fields: [{ label: Label, name: label, widget: string }, { label: Subtitle, name: sub, widget: string }, { label: Icon, name: icon, widget: string }]
-          - label: Case Studies Section
+          - label: Case Studies Section Copy
             name: caseStudiesSection
             widget: object
-            fields: [{ label: Eyebrow, name: eyebrow, widget: string }, { label: Title, name: title, widget: string }, { label: Description, name: description, widget: text }]
-          - label: Why Traideas
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+          - label: Why Traideas Copy
             name: whyTraideas
             widget: object
             fields:
               - { label: Eyebrow, name: eyebrow, widget: string }
               - { label: Title, name: title, widget: string }
               - { label: Description, name: description, widget: text }
-              - label: Items
-                name: items
-                widget: list
-                fields: [{ label: Number, name: n, widget: string }, { label: Title, name: t, widget: string }, { label: Description, name: d, widget: text }]
-          - label: Tech Stack
+          - label: Tech Stack Copy
             name: techStack
             widget: object
             fields:
               - { label: Eyebrow, name: eyebrow, widget: string }
               - { label: Title, name: title, widget: string }
               - { label: Description, name: description, widget: text }
-              - label: Items
-                name: items
-                widget: list
-                fields: [{ label: Name, name: name, widget: string }, { label: Description, name: desc, widget: string }]
-          - &cta_field
-            label: CTA
+          - label: CTA Copy
+            name: cta
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+          - label: Culture Section Copy
+            name: culture
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+          - label: Careers Section Copy
+            name: careersSection
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+              - { label: Card Title, name: cardTitle, widget: string, required: false }
+          - label: Blog Section Copy
+            name: blogSection
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+
+      - label: Services Page
+        name: services
+        file: src/content/page-copy/services.md
+        fields:
+          - *seo_field
+          - *hero_copy_field
+          - *section_services
+          - label: CTA Copy
+            name: cta
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+
+      - label: Digital Transformation Service
+        name: service-digital-transformation
+        file: src/content/page-copy/service-digital-transformation.md
+        fields: &service_copy_fields
+          - { label: Eyebrow, name: eyebrow, widget: string }
+          - { label: Title Lines, name: title, widget: list, min: 2, max: 2, field: { label: Line, name: line, widget: string } }
+          - { label: Card Title, name: cardTitle, widget: string }
+          - { label: Card Description, name: desc, widget: text }
+          - { label: Hero Subtitle, name: subtitle, widget: text }
+          - { label: About Lead, name: aboutLead, widget: text }
+          - { label: About Body, name: aboutBody, widget: text }
+      - label: MVP Development Service
+        name: service-mvp-development
+        file: src/content/page-copy/service-mvp-development.md
+        fields: *service_copy_fields
+      - label: AI Automation Service
+        name: service-ai-automation
+        file: src/content/page-copy/service-ai-automation.md
+        fields: *service_copy_fields
+      - label: Consulting Service
+        name: service-consulting
+        file: src/content/page-copy/service-consulting.md
+        fields: *service_copy_fields
+
+      - label: Case Studies Page
+        name: case-studies
+        file: src/content/page-copy/case-studies.md
+        fields:
+          - *seo_field
+          - *hero_copy_field
+          - label: CTA Copy
+            name: cta
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+
+      - label: Insights Page
+        name: insights
+        file: src/content/page-copy/insights.md
+        fields:
+          - *seo_field
+          - *hero_copy_field
+          - label: Section Copy
+            name: sections
+            widget: object
+            fields:
+              - label: Blog
+                name: blog
+                widget: object
+                fields:
+                  - { label: Eyebrow, name: eyebrow, widget: string }
+                  - { label: Title, name: title, widget: string }
+                  - { label: Description, name: description, widget: text }
+              - label: Quick Bites
+                name: quick
+                widget: object
+                fields:
+                  - { label: Eyebrow, name: eyebrow, widget: string }
+                  - { label: Title, name: title, widget: string }
+                  - { label: Description, name: description, widget: text }
+              - label: Resources
+                name: resources
+                widget: object
+                fields:
+                  - { label: Eyebrow, name: eyebrow, widget: string }
+                  - { label: Title, name: title, widget: string }
+                  - { label: Description, name: description, widget: text }
+          - label: CTA Copy
+            name: cta
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+
+      - label: About Page
+        name: about
+        file: src/content/page-copy/about.md
+        fields:
+          - *seo_field
+          - *hero_copy_field
+          - label: Story Copy
+            name: story
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Paragraphs, name: paragraphs, widget: list, field: { label: Paragraph, name: paragraph, widget: text } }
+          - label: Mindset Intro Copy
+            name: mindsetIntro
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+          - label: Award Copy
+            name: award
+            widget: object
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Paragraphs, name: paragraphs, widget: list, field: { label: Paragraph, name: paragraph, widget: text } }
+          - label: Join CTA Copy
+            name: joinCta
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+
+      - label: Moments Page
+        name: moments
+        file: src/content/page-copy/moments.md
+        fields:
+          - *seo_field
+          - *hero_copy_field
+          - label: Gallery Intro Copy
+            name: galleryIntro
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Accent, name: accent, widget: string }
+              - { label: Description, name: description, widget: text }
+          - label: CTA Copy
             name: cta
             widget: object
             fields:
@@ -275,273 +414,31 @@ collections:
               - { label: Title, name: title, widget: string }
               - { label: Accent, name: accent, widget: string, required: false }
               - { label: Description, name: description, widget: text }
-              - label: Primary
-                name: primary
-                widget: object
-                required: false
-                fields: [{ label: Label, name: label, widget: string }, { label: Link, name: href, widget: string }]
-              - label: Secondary
-                name: secondary
-                widget: object
-                required: false
-                fields: [{ label: Label, name: label, widget: string }, { label: Link, name: href, widget: string }]
-              - { label: Tagline, name: tagline, widget: string, required: false }
-              - { label: Aside Title, name: asideTitle, widget: string, required: false }
-              - { label: Items, name: items, widget: list, required: false, field: { label: Item, name: item, widget: string } }
-          - label: Culture
-            name: culture
-            widget: object
-            fields:
-              - { label: Eyebrow, name: eyebrow, widget: string }
-              - { label: Title, name: title, widget: string }
-              - { label: Description, name: description, widget: text }
-              - label: Images
-                name: images
-                widget: list
-                fields: [{ label: Image, name: src, widget: image }, { label: CSS Class, name: cls, widget: string }, { label: Alt, name: alt, widget: string }, { label: Tag, name: tag, widget: string }]
-          - label: Careers Section
-            name: careersSection
-            widget: object
-            fields:
-              - { label: Eyebrow, name: eyebrow, widget: string }
-              - { label: Title, name: title, widget: string }
-              - { label: Description, name: description, widget: text }
-              - label: CTA
-                name: cta
-                widget: object
-                fields: [{ label: Label, name: label, widget: string }, { label: Link, name: href, widget: string }]
-              - label: Stats
-                name: stats
-                widget: list
-                fields: [{ label: Value, name: value, widget: string }, { label: Label, name: label, widget: string }]
-              - { label: Card Title, name: cardTitle, widget: string }
-              - { label: Image, name: image, widget: image }
-              - { label: Image Alt, name: imageAlt, widget: string }
-          - label: Blog Section
-            name: blogSection
-            widget: object
-            fields:
-              - { label: Eyebrow, name: eyebrow, widget: string }
-              - { label: Title, name: title, widget: string }
-              - label: Action
-                name: action
-                widget: object
-                fields: [{ label: Label, name: label, widget: string }, { label: Link, name: href, widget: string }]
-      - label: Services Page
-        name: services-page
-        file: src/content/pages/services.md
-        fields:
-          - *seo_field
-          - *hero_field
-          - label: Visual Card
-            name: visual
-            widget: object
-            fields:
-              - { label: Eyebrow, name: eyebrow, widget: string }
-              - { label: Code, name: code, widget: string }
-              - { label: Title, name: title, widget: string }
-              - { label: Description, name: description, widget: text }
-              - label: Stats
-                name: stats
-                widget: list
-                fields: [{ label: Value, name: value, widget: string }, { label: Label, name: label, widget: string }]
-              - { label: Tags, name: tags, widget: list, field: { label: Tag, name: tag, widget: string } }
-              - { label: Bottom Left, name: bottomLeft, widget: string }
-              - { label: Bottom Right, name: bottomRight, widget: string }
-          - label: Services Section
-            name: servicesSection
-            widget: object
-            fields: [{ label: Eyebrow, name: eyebrow, widget: string }, { label: Title, name: title, widget: string }, { label: Description, name: description, widget: text }]
-          - label: Process Steps
-            name: processSteps
-            widget: list
-            fields: [{ label: Title, name: t, widget: string }, { label: Description, name: d, widget: text }]
-          - *cta_field
-      - label: Digital Transformation Service
-        name: service-digital-transformation
-        file: src/content/pages/service-digital-transformation.md
-        fields: &service_fields
-          - { label: Slug, name: slug, widget: string }
-          - { label: Number, name: num, widget: string }
-          - { label: Icon, name: icon, widget: string }
-          - { label: Eyebrow, name: eyebrow, widget: string }
-          - { label: Page Title Lines, name: title, widget: list, field: { label: Line, name: line, widget: string } }
-          - { label: Card Title, name: cardTitle, widget: string }
-          - { label: Card Description, name: desc, widget: text }
-          - { label: Subtitle, name: subtitle, widget: text }
-          - label: Hero Stats
-            name: heroStats
-            widget: list
-            fields: [{ label: Value, name: v, widget: string }, { label: Label, name: l, widget: string }]
-          - { label: Hero Tags, name: heroTags, widget: list, field: { label: Tag, name: tag, widget: string } }
-          - { label: Pulse Text, name: pulse, widget: string }
-          - { label: About Lead, name: aboutLead, widget: text }
-          - { label: About Body, name: aboutBody, widget: text }
-          - label: Features
-            name: features
-            widget: list
-            fields: [{ label: Title, name: t, widget: string }, { label: Description, name: d, widget: text }]
-          - label: Impact
-            name: impact
-            widget: list
-            fields: [{ label: Value, name: v, widget: string }, { label: Suffix, name: s, widget: string }, { label: Title, name: t, widget: string }, { label: Description, name: d, widget: text }]
-          - { label: Components, name: components, widget: list, field: { label: Component, name: component, widget: string } }
-          - { label: CTA Includes, name: ctaIncludes, widget: list, field: { label: Item, name: item, widget: string } }
-      - label: MVP Development Service
-        name: service-mvp-development
-        file: src/content/pages/service-mvp-development.md
-        fields: *service_fields
-      - label: AI Automation Service
-        name: service-ai-automation
-        file: src/content/pages/service-ai-automation.md
-        fields: *service_fields
-      - label: Consulting Service
-        name: service-consulting
-        file: src/content/pages/service-consulting.md
-        fields: *service_fields
-      - label: Case Studies Page
-        name: case-studies-page
-        file: src/content/pages/case-studies.md
-        fields:
-          - *seo_field
-          - *hero_field
-          - label: Visual Card
-            name: visual
-            widget: object
-            fields:
-              - { label: Eyebrow, name: eyebrow, widget: string }
-              - label: Stats
-                name: stats
-                widget: list
-                fields: [{ label: Value, name: value, widget: string }, { label: Label, name: label, widget: string }]
-              - { label: Tags, name: tags, widget: list, field: { label: Tag, name: tag, widget: string } }
-              - { label: Bottom Left, name: bottomLeft, widget: string }
-              - { label: Bottom Right, name: bottomRight, widget: string }
-          - *cta_field
-      - label: Insights Page
-        name: insights-page
-        file: src/content/pages/insights.md
-        fields:
-          - *seo_field
-          - *hero_field
-          - label: Categories
-            name: categories
-            widget: list
-            fields: [{ label: Key, name: key, widget: string }, { label: Label, name: label, widget: string }, { label: Meta, name: meta, widget: text }]
-          - label: Sections
-            name: sections
-            widget: object
-            fields:
-              - { label: Blog, name: blog, widget: object, fields: [{ label: Eyebrow, name: eyebrow, widget: string }, { label: Title, name: title, widget: string }, { label: Description, name: description, widget: text }] }
-              - { label: Quick Bites, name: quick, widget: object, fields: [{ label: Eyebrow, name: eyebrow, widget: string }, { label: Title, name: title, widget: string }, { label: Description, name: description, widget: text }] }
-              - { label: Resources, name: resources, widget: object, fields: [{ label: Eyebrow, name: eyebrow, widget: string }, { label: Title, name: title, widget: string }, { label: Description, name: description, widget: text }] }
-          - *cta_field
-      - label: About Page
-        name: about-page
-        file: src/content/pages/about.md
-        fields:
-          - *seo_field
-          - *hero_field
-          - label: Story
-            name: story
-            widget: object
-            fields: [{ label: Eyebrow, name: eyebrow, widget: string }, { label: Title, name: title, widget: string }, { label: Image, name: image, widget: image }, { label: Paragraphs, name: paragraphs, widget: list, field: { label: Paragraph, name: paragraph, widget: text } }]
-          - label: Story Stat
-            name: storyStat
-            widget: object
-            fields: [{ label: Value, name: value, widget: string }, { label: Label, name: label, widget: string }]
-          - label: Mindset Intro
-            name: mindsetIntro
-            widget: object
-            fields: [{ label: Eyebrow, name: eyebrow, widget: string }, { label: Title, name: title, widget: string }, { label: Description, name: description, widget: text }]
-          - label: Pillars
-            name: pillars
-            widget: list
-            fields: [{ label: Number, name: n, widget: string }, { label: Title, name: t, widget: string }, { label: Description, name: d, widget: text }]
-          - label: Award
-            name: award
-            widget: object
-            fields: [{ label: Title, name: title, widget: string }, { label: Image, name: image, widget: image }, { label: Paragraphs, name: paragraphs, widget: list, field: { label: Paragraph, name: paragraph, widget: text } }, { label: Meta, name: meta, widget: list, fields: [{ label: Label, name: label, widget: string }, { label: Value, name: value, widget: string }] }]
-          - label: Join CTA
-            name: joinCta
-            widget: object
-            fields:
-              - { label: Eyebrow, name: eyebrow, widget: string }
-              - { label: Title, name: title, widget: string }
-              - { label: Description, name: description, widget: text }
-              - label: Primary
-                name: primary
-                widget: object
-                fields: [{ label: Label, name: label, widget: string }, { label: Link, name: href, widget: string }]
-              - label: Secondary
-                name: secondary
-                widget: object
-                fields: [{ label: Label, name: label, widget: string }, { label: Link, name: href, widget: string }]
-              - { label: Aside Title, name: asideTitle, widget: string }
-              - { label: Items, name: items, widget: list, field: { label: Item, name: item, widget: string } }
-      - label: Moments Page
-        name: moments-page
-        file: src/content/pages/moments.md
-        fields:
-          - *seo_field
-          - *hero_field
-          - label: Gallery Intro
-            name: galleryIntro
-            widget: object
-            fields: [{ label: Eyebrow, name: eyebrow, widget: string }, { label: Title, name: title, widget: string }, { label: Accent, name: accent, widget: string }, { label: Description, name: description, widget: text }]
-          - *cta_field
+
       - label: Careers Page
         name: careers
-        file: src/content/pages/careers.md
+        file: src/content/page-copy/careers.md
         fields:
           - *seo_field
-          - *hero_field
-          - label: Reasons
-            name: reasons
-            widget: list
-            fields: [{ label: Number, name: n, widget: string }, { label: Title, name: t, widget: string }, { label: Description, name: d, widget: text }]
-          - label: Values
-            name: values
-            widget: list
-            fields: [{ label: Label, name: label, widget: string }, { label: Icon, name: icon, widget: string }]
-          - label: Life Images
-            name: lifeImages
-            widget: list
-            fields: [{ label: Image, name: src, widget: image }, { label: Alt, name: alt, widget: string }, { label: CSS Class, name: cls, widget: string }]
+          - *hero_copy_field
+
       - label: Contact Page
-        name: contact-page
-        file: src/content/pages/contact.md
+        name: contact
+        file: src/content/page-copy/contact.md
         fields:
           - *seo_field
-          - *hero_field
-          - { label: Calendly URL, name: calendlyUrl, widget: string }
-          - { label: Email, name: email, widget: string }
-          - { label: Phone, name: phone, widget: string }
-          - { label: Working Hours, name: workingHours, widget: string }
-          - label: Highlights
-            name: highlights
-            widget: list
-            fields: [{ label: Label, name: label, widget: string }, { label: Icon, name: icon, widget: string }]
-          - { label: Calendar Title, name: calendarTitle, widget: string }
-          - { label: Calendar Tag, name: calendarTag, widget: string }
-          - label: Locations Intro
+          - *hero_copy_field
+          - label: Locations Intro Copy
             name: locationsIntro
             widget: object
-            fields: [{ label: Eyebrow, name: eyebrow, widget: string }, { label: Title, name: title, widget: string }, { label: Description, name: description, widget: text }]
-          - label: Offices
-            name: offices
-            widget: list
-            fields: [{ label: Title, name: title, widget: string }, { label: Address, name: address, widget: text }, { label: Image, name: image, widget: image }, { label: Tag, name: tag, widget: string }, { label: Map URL, name: mapUrl, widget: string }]
-          - label: Direct CTA
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+          - label: Direct CTA Copy
             name: directCta
             widget: object
             fields:
               - { label: Eyebrow, name: eyebrow, widget: string }
               - { label: Title, name: title, widget: string }
               - { label: Description, name: description, widget: text }
-              - label: Actions
-                name: actions
-                widget: list
-                fields: [{ label: Label, name: label, widget: string }, { label: Link, name: href, widget: string }, { label: Style, name: style, widget: select, options: [primary, ghost] }]
-              - { label: Aside Title, name: asideTitle, widget: string }
-              - { label: Items, name: items, widget: list, field: { label: Item, name: item, widget: string } }

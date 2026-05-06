@@ -2,6 +2,7 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import { getMomentsData } from "../lib/content.js";
 import Icon from "../components/common/Icon.astro";
+import OptimizedImage from "../components/common/OptimizedImage.astro";
 
 const momentsData = await getMomentsData();
 const { hero, galleryIntro, gallery, cta } = momentsData;
@@ -37,7 +38,7 @@ const { hero, galleryIntro, gallery, cta } = momentsData;
         <div class="mh-collage">
           {hero.collage.map((item) => (
             <div class={`mh-tile ${item.cls}`}>
-              <img src={item.src} alt={item.alt} loading="lazy" decoding="async" />
+              <OptimizedImage src={item.src} alt={item.alt} width={520} height={640} loading="lazy" decoding="async" />
             </div>
           ))}
           <div class="chip chip-mc1"><span class="pulse"></span>{hero.chips[0]}</div>
@@ -70,7 +71,7 @@ const { hero, galleryIntro, gallery, cta } = momentsData;
             {m.type === "video" ? (
               <video data-src={m.src} poster={m.poster} muted loop playsinline preload="none" controls={m.controls ?? true}></video>
             ) : (
-              <img src={m.src} alt={`${m.tag} at Traideas`} loading="lazy" decoding="async" />
+              <OptimizedImage src={m.src} alt={`${m.tag} at Traideas`} width={720} height={720} loading="lazy" decoding="async" />
             )}
             <div class="mg-overlay"></div>
             <figcaption class="mg-chip">{m.tag}</figcaption>

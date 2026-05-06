@@ -22,7 +22,7 @@ Local Decap editing uses `local_backend: true` and `decap-server`, so you do not
 
 Production uses the GitHub backend in `public/admin/config.yml` with:
 
-- repo: `traideas/traideas-website-astro`
+- repo: `istiak227/traideas-astro-decap`
 - branch: `main`
 - `publish_mode: editorial_workflow`
 - `squash_merges: true`
@@ -37,7 +37,26 @@ Production editors will need GitHub/OAuth access to the repo.
 - Quick bites: `src/content/quick-bites/`
 - Resources: `src/content/resources/`
 - Moments media entries with tags: `src/content/moments/`
-- Page settings: `src/content/pages/`
+- Editor-managed page copy: `src/content/page-copy/`
+- Code-owned page defaults: `src/content/pages/`
+
+## Hybrid CMS model
+
+Decap follows a hybrid model so editors can update content without changing layout or behavior.
+
+CMS manages:
+
+- Blog, case study, quick bite, resource, moment, and career entries.
+- Basic page copy such as hero titles, subtitles, section headings, and descriptions.
+- SEO title and description.
+
+Code manages:
+
+- Layout, section structure, animations, grids, button styles, component logic, and responsive behavior.
+- Code-owned page defaults in `src/content/pages/`.
+- Copy overrides from `src/content/page-copy/` are merged over those defaults at build time.
+
+This means editors should use the CMS `Page Settings` collection for copy updates, while developers should change `src/content/pages/`, Astro components, or CSS when the page structure/design needs to change.
 
 ## Media library
 
@@ -46,14 +65,4 @@ Decap uses one global media root so editors can browse the full site image libra
 - Repository folder: `public/assets/images/`
 - Public URL prefix: `/assets/images`
 
-Recommended organization inside that folder:
-
-- `public/assets/images/`
-- `public/assets/images/`
-- `public/assets/images/`
-- `public/assets/images/blogs/`
-- `public/assets/images/case-studies/`
-- `public/assets/images/services/`
-- `public/assets/images/cms/` for general CMS uploads
-
-Do not set per-field `media_folder` unless you intentionally want that image picker to focus on one folder. Keeping one global root is the safest way to see existing images now and makes it easier to migrate later to a hosted image library/CDN because content paths consistently start with `/assets/images/...`.
+Keep one global image root unless you intentionally want a field-specific picker. This is the safest way to see existing images now and makes it easier to migrate later to a hosted image library/CDN because content paths consistently start with `/assets/images/...`.

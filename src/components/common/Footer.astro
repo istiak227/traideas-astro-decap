@@ -2,6 +2,8 @@
 import { siteData } from "../../data/siteData.js";
 import { getServices } from "../../lib/content.js";
 import Icon from "./Icon.astro";
+import OptimizedImage from "./OptimizedImage.astro";
+
 const currentYear = new Date().getFullYear();
 const services = await getServices();
 ---
@@ -10,7 +12,7 @@ const services = await getServices();
     <div class="footer-top">
       <div class="footer-brand">
         <div class="fb-logo">
-          <img src={siteData.logo} alt="Traideas" width="36" height="36" />
+          <OptimizedImage src={siteData.logo} alt="Traideas" width={36} height={36} />
           <span>{siteData.name}</span>
         </div>
         <p>{siteData.description}</p>
@@ -59,7 +61,7 @@ const services = await getServices();
       <div class="footer-socials">{siteData.socialLinks.map((s) => <a href={s.href} aria-label={s.label} target="_blank" rel="noreferrer"><Icon name={s.label} /></a>)}</div>
       <div class="footer-basis">
         <a href={siteData.basisProfileUrl} target="_blank" rel="noreferrer" aria-label="View Traideas BASIS member profile">
-          <img src={siteData.basisLogo} alt="BASIS member" loading="lazy" />
+          <OptimizedImage src={siteData.basisLogo} alt="BASIS member" width={180} height={100} loading="lazy" />
         </a>
       </div>
     </div>

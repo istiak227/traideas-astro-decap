@@ -1,4 +1,6 @@
 ---
+import OptimizedImage from "./OptimizedImage.astro";
+
 const { post, delay = "0s" } = Astro.props;
 const href = post.href ?? `/insights/${post.slug}`;
 ---
@@ -6,7 +8,7 @@ const href = post.href ?? `/insights/${post.slug}`;
 <a href={href} class="blog-card reveal" style={`--delay:${delay}`}>
   <div class="b-thumb">
     <span class="b-tag">{post.cat}</span>
-    <img src={post.image} alt={post.title} loading="lazy" />
+    <OptimizedImage src={post.image} alt={post.title} width={720} height={480} loading="lazy" />
   </div>
   <div class="b-body">
     <div class="b-meta">

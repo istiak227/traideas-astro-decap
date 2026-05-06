@@ -1,6 +1,7 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
 import { getCollection } from "astro:content";
+import OptimizedImage from "../../components/common/OptimizedImage.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blogs");
@@ -12,6 +13,6 @@ const { Content } = await post.render();
 const data = { slug: post.slug, ...post.data };
 ---
 <MainLayout title={`${data.title} | Traideas`} description={data.excerpt} image={data.image}>
-  <section class="service-hero"><div class="sh-bg"></div><div class="sh-blob"></div><div class="container"><div class="sh-grid"><div class="reveal in"><div class="sh-crumb"><a href="/insights">Insights</a><span>›</span><span>{data.cat}</span></div><div class="eyebrow">{data.cat} · {data.read}</div><h1 class="h-display" style="font-size:clamp(42px,6vw,78px)">{data.title}</h1><p class="sh-sub">{data.excerpt}</p></div><div class="sh-visual reveal in" style="padding:0;overflow:hidden"><img src={data.image} alt={data.title} /></div></div></div></section>
+  <section class="service-hero"><div class="sh-bg"></div><div class="sh-blob"></div><div class="container"><div class="sh-grid"><div class="reveal in"><div class="sh-crumb"><a href="/insights">Insights</a><span>›</span><span>{data.cat}</span></div><div class="eyebrow">{data.cat} · {data.read}</div><h1 class="h-display" style="font-size:clamp(42px,6vw,78px)">{data.title}</h1><p class="sh-sub">{data.excerpt}</p></div><div class="sh-visual reveal in" style="padding:0;overflow:hidden"><OptimizedImage src={data.image} alt={data.title} width={1200} height={800} loading="eager" /></div></div></div></section>
   <article class="service-about"><div class="container" style="max-width:850px"><div class="detail-rich"><Content /></div></div></article>
 </MainLayout>
